@@ -35,7 +35,8 @@ function subscribe(listener: () => void): () => void {
   };
 }
 
-function dispatch(action: DemoAction): void {
+/** For parts of a screen that only act on the demo and never read it (no re-render on change). */
+export function dispatch(action: DemoAction): void {
   const next = reducer(getSnapshot(), action);
   if (next === current) return;
   current = next;
