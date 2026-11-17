@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Team Performance · Two looks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Big+Shoulders+Display:wght@700;800;900&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ---------- page chrome (neutral, not part of either look) ---------- */
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:#ececea;color:#1b1b1b;font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.page{max-width:1320px;margin:0 auto;padding:40px 24px 96px}
+.intro h1{font-size:28px;line-height:1.2;font-weight:700;letter-spacing:-.01em}
+.intro .line{margin-top:12px;max-width:72ch;font-size:17px}
+.intro .how{margin-top:10px;max-width:72ch;color:#4a4a48}
+.jump{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.jump a{color:#1b1b1b;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.cmp{margin-top:28px;width:100%;border-collapse:collapse;background:#fff;font-size:14px}
+.cmp th,.cmp td{border:1px solid #d6d6d2;padding:10px 12px;text-align:left;vertical-align:top}
+.cmp thead th{background:#f6f6f4;font-weight:600}
+.cmp .sw{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin-right:6px;border:1px solid rgba(0,0,0,.2)}
+.opt-head{margin-top:72px;display:grid;grid-template-columns:1fr 1fr;gap:16px 40px;align-items:start}
+.opt-head h2{font-size:24px;line-height:1.2}
+.opt-head .tag{font-size:13px;color:#55554f;margin-top:4px}
+.opt-head p{max-width:62ch}
+.opt-head .fit{grid-column:1/-1;background:#fff;border:1px solid #d6d6d2;padding:14px 16px}
+.opt-head .fit b{display:block;margin-bottom:2px}
+.cap{font-size:13px;color:#55554f;margin:28px 0 8px}
+.screen{background:#fff;border:1px solid #c9c9c4;overflow:hidden;position:relative}
+.screen.team .main{padding-right:448px}
+@media (max-width:820px){.screen.team .main{padding-right:16px}.opt-head{grid-template-columns:1fr}.cmp{display:block;overflow-x:auto}}
+
+/* ---------- shared screen skeleton ---------- */
+.app{display:grid;grid-template-columns:216px 1fr;min-height:640px}
+.nav{padding:20px 14px;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:10px;padding:2px 8px 22px}
+.nav a{display:flex;align-items:center;gap:10px;padding:9px 10px;text-decoration:none;font-size:14px}
+.nav svg{width:18px;height:18px;flex:none}
+.nav .help{margin-top:auto}
+.main{padding:22px 28px 28px;min-width:0}
+.banner{display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:12.5px;padding:7px 28px}
+.banner .sp{flex:1}
+.banner a{color:inherit}
+.top{display:flex;align-items:flex-end;gap:16px;margin-bottom:18px}
+.top .sp{flex:1}
+.num{font-variant-numeric:tabular-nums}
+table.log{width:100%;border-collapse:collapse;font-size:13.5px}
+table.log th{text-align:left;font-weight:600;padding:8px 10px}
+table.log td{padding:10px;vertical-align:middle}
+.who{display:flex;flex-direction:column;line-height:1.25}
+.who small{font-size:12px}
+.mono{font-variant-numeric:tabular-nums}
+
+/* phone (shared geometry, colours from each look) */
+.phone{width:296px;aspect-ratio:9/19.5;border-radius:46px;padding:10px;position:relative;flex:none}
+.phone .scr{position:absolute;inset:10px;border-radius:37px;overflow:hidden;display:flex;flex-direction:column}
+.phone .island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:92px;height:27px;border-radius:20px;background:#000;z-index:2}
+.phone .status{height:46px;display:flex;align-items:center;justify-content:space-between;padding:4px 26px 0 30px;font:600 14px/1 -apple-system,"SF Pro Text",system-ui,sans-serif}
+.phone .status .ic{display:flex;gap:5px;align-items:center}
+.phone .mhead{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 0 10px;font:500 11px/1.2 -apple-system,system-ui,sans-serif}
+.phone .mhead .av{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font:600 17px/1 -apple-system,system-ui,sans-serif}
+.phone .mhead .back{position:absolute;left:18px;top:62px}
+.phone .thread{flex:1;overflow:auto;padding:8px 12px;display:flex;flex-direction:column;gap:6px;font:15px/1.3 -apple-system,"SF Pro Text",system-ui,sans-serif}
+.phone .when{text-align:center;font-size:11px;margin:6px 0 4px}
+.phone .bub{max-width:78%;padding:8px 12px;border-radius:18px;border-bottom-left-radius:5px;align-self:flex-start}
+.phone .compose{margin:8px 12px 26px;border-radius:18px;padding:7px 12px;font:14px/1.2 -apple-system,system-ui,sans-serif}
+.phone .home{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:110px;height:4px;border-radius:3px}
+.phone .side{position:absolute;width:3px;border-radius:2px}
+
+/* responsive skeleton */
+@media (max-width:820px){
+  .app{grid-template-columns:1fr;min-height:0}
+  .nav{flex-direction:row;overflow-x:auto;padding:10px 12px;gap:2px;align-items:center}
+  .brand{padding:0 10px 0 2px}
+  .brand .wm{display:none}
+  .nav a{white-space:nowrap;padding:7px 9px}
+  .nav .help{margin-top:0}
+  .main{padding:16px}
+  .banner{padding:7px 16px}
+  .top{flex-wrap:wrap}
+  table.stack thead{display:none}
+  table.stack,table.stack tbody,table.stack tr,table.stack td{display:block;width:100%}
+  table.stack tr{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:12px 2px}
+  table.stack td{padding:0}
+  table.stack td.hide-s{display:none}
+}
+
+/* =====================================================================
+   OPTION A · HARBOR CHART
+   ===================================================================== */
+.A{--ground:#ffffff;--shell:#e6f0f4;--shell-2:#d3e5ed;--ink:#0f2430;--muted:#4a6472;--rule:#b7cdd7;--rule-2:#dbe7ec;--accent:#a3125f;--accent-ink:#ffffff;--accent-tint:#f8e6ef;--land:#efe6cc;--land-ink:#6a5a2b;--deep:#164e6e;
+  --d1:#e6f0f4;--d2:#cde2eb;--d3:#a6cadb;--d4:#79adc6;--d5:#4b8bad;--d6:#24668b;
+  font-family:"Archivo",system-ui,sans-serif;font-stretch:100%;color:var(--ink)}
+.A ::selection{background:var(--accent-tint);color:var(--ink)}
+.A .screen{border-color:#9fb8c4}
+.A .app{background:var(--shell)}
+.A .nav{background:var(--shell)}
+.A .nav a{color:var(--ink)}
+.A .nav a[aria-current]{background:var(--ground);outline:1px solid var(--rule);outline-offset:-1px;box-shadow:inset 0 0 0 3px var(--ground),inset 0 0 0 4px var(--rule-2);font-weight:600}
+.A .wm{font-stretch:112%;font-weight:700;font-size:15px;line-height:1.1}
+.A .wm small{display:block;font-weight:400;font-stretch:100%;font-size:11.5px;color:var(--muted)}
+.A .main{background:var(--ground);border-left:1px solid var(--rule)}
+.A .banner{background:var(--ink);color:#e9f2f6}
+.A h3{font-stretch:112%;font-weight:700;font-size:24px;letter-spacing:-.01em;line-height:1.15}
+.A .sub{color:var(--muted);font-size:13.5px}
+.A .btn{font:600 13.5px/1 "Archivo",sans-serif;padding:10px 14px;border:1px solid var(--ink);background:var(--ground);color:var(--ink);box-shadow:inset 0 0 0 2px var(--ground),inset 0 0 0 3px var(--rule);cursor:pointer;display:inline-flex;gap:8px;align-items:center;text-decoration:none;white-space:nowrap}
+.A .btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:inset 0 0 0 2px var(--accent),inset 0 0 0 3px rgba(255,255,255,.55)}
+.A .frame{border:1px solid var(--rule);outline:1px solid var(--rule-2);outline-offset:3px;margin:4px;background:var(--ground)}
+.A .grad{height:7px;border-bottom:1px solid var(--rule);background:repeating-linear-gradient(90deg,var(--rule) 0 1px,transparent 1px 12px),repeating-linear-gradient(90deg,var(--ink) 0 1px,transparent 1px 60px);background-size:auto 4px,auto 7px;background-repeat:repeat-x;background-position:0 100%,0 100%}
+.A .figs{display:grid;grid-template-columns:repeat(4,1fr)}
+.A .fig{padding:14px 18px 16px;border-right:1px solid var(--rule-2)}
+.A .fig:last-child{border-right:0}
+.A .fig .k{font-size:12.5px;color:var(--muted)}
+.A .fig .v{font-stretch:112%;font-weight:600;font-size:34px;line-height:1.1;margin-top:4px;font-variant-numeric:tabular-nums}
+.A .fig .n{font-size:12.5px;color:var(--muted);margin-top:2px}
+.A .fig.flag .v{color:var(--accent)}
+.A .fig.flag a{color:var(--accent);font-weight:600}
+.A .chart{padding:16px 18px 12px}
+.A .chart-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.A .chart-head b{font-stretch:112%;font-size:15px}
+.A .key{display:flex;gap:4px;align-items:center;font-size:12px;color:var(--muted)}
+.A .key i{width:16px;height:10px;display:inline-block}
+.A .depth{display:grid;grid-template-columns:repeat(10,1fr);align-items:end;height:178px;margin-top:14px;border-bottom:1px solid var(--ink);position:relative}
+.A .depth div{position:relative;border-right:1px solid rgba(255,255,255,.7)}
+.A .depth div span{position:absolute;top:-19px;left:0;right:0;text-align:center;font-style:italic;font-size:13px;color:var(--deep);font-variant-numeric:tabular-nums}
+.A .depth::before{content:"";position:absolute;left:0;right:0;bottom:61%;border-top:1px dashed var(--accent)}
+.A .depth::after{content:"busy line · 20 calls an hour";position:absolute;right:0;bottom:calc(61% + 3px);font-size:11px;color:var(--accent);font-style:italic}
+.A .hours{display:grid;grid-template-columns:repeat(10,1fr);font-size:11.5px;color:var(--muted);margin-top:5px;text-align:center}
+/* tags: state carried by line form, not hue alone */
+.A .t{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;padding:3px 8px;border:1px solid currentColor;white-space:nowrap;line-height:1.35}
+.A .t svg{width:11px;height:11px}
+.A .t.sent{background:var(--deep);border-color:var(--deep);color:#fff}
+.A .t.short{color:var(--muted);border-style:dashed}
+.A .t.asked{color:var(--muted);border-style:dotted;border-width:2px;padding:2px 7px}
+.A .t.nomatch{color:var(--muted);text-decoration:line-through;text-decoration-thickness:1px;border-color:var(--rule)}
+.A .t.review{color:var(--accent);background:var(--accent-tint)}
+.A .t.ok{color:var(--deep);border-color:var(--rule)}
+.A .t.cleared{color:var(--deep);border-color:var(--deep)}
+.A table.log thead th{font-size:12px;color:var(--muted);font-weight:600;border-bottom:1px solid var(--ink);background:var(--ground)}
+.A table.log td{border-bottom:1px solid var(--rule-2)}
+.A table.log tr.sel td{background:var(--shell)}
+.A .who small{color:var(--muted)}
+.A .bar{display:flex;height:8px;width:120px;background:var(--rule-2)}
+.A .bar i{display:block;height:100%}
+.A .bar .c{background:var(--deep)}
+.A .bar .o{background:var(--land);outline:1px solid #d6c79b;outline-offset:-1px}
+.A .rate{font-stretch:112%;font-weight:600;font-variant-numeric:tabular-nums;font-size:16px}
+.A .rate.low{color:var(--accent)}
+.A .scrim{position:absolute;inset:0;background:rgba(15,36,48,.34)}
+.A .drawer{position:absolute;top:0;right:0;bottom:0;width:420px;background:var(--ground);border-left:1px solid var(--ink);display:flex;flex-direction:column;box-shadow:-18px 0 40px -18px rgba(15,36,48,.45)}
+.A .drawer header{padding:18px 22px 14px;border-bottom:1px solid var(--rule)}
+.A .drawer .x{float:right;border:1px solid var(--rule);background:none;width:30px;height:30px;display:grid;place-items:center;color:var(--ink)}
+.A .kv{display:grid;grid-template-columns:120px 1fr;gap:8px 12px;font-size:13.5px;padding:16px 22px;border-bottom:1px solid var(--rule-2)}
+.A .kv dt{color:var(--muted)}
+.A .blocks{padding:14px 22px;border-bottom:1px solid var(--rule-2)}
+.A .blocks b{font-size:13px}
+.A .tl{display:grid;grid-template-columns:repeat(40,1fr);height:22px;margin:10px 0 6px;background:var(--rule-2)}
+.A .tl i{display:block}
+.A .tl .c{background:var(--deep)}
+.A .tl .o{background:var(--land);border-left:1px solid #c8b67f;border-right:1px solid #c8b67f}
+.A .why{margin:16px 22px;padding:12px 14px;background:var(--shell);border:1px solid var(--rule-2);font-size:13.5px}
+.A .drawer footer{margin-top:auto;padding:16px 22px;border-top:1px solid var(--rule);display:flex;gap:10px;align-items:center}
+.A .rules{display:grid;grid-template-columns:1fr 1fr auto;border:1px solid var(--rule);margin-bottom:16px}
+.A .rule{padding:12px 16px;border-right:1px solid var(--rule-2);display:flex;gap:12px;align-items:center}
+.A .rule svg{width:84px;height:26px;flex:none}
+.A .rule b{font-stretch:112%;display:block;font-size:14px}
+.A .rule span{font-size:12.5px;color:var(--muted)}
+.A .rules .edit{padding:12px 16px;display:flex;align-items:center;font-size:12.5px;color:var(--muted)}
+.A .surv{display:grid;grid-template-columns:1fr 330px;gap:0;min-height:700px}
+.A .surv .side{background:var(--shell);border-left:1px solid var(--rule);display:flex;flex-direction:column;align-items:center;padding:20px 16px;gap:12px}
+.A .dur{display:flex;align-items:center;gap:8px}
+.A .dur .r{position:relative;width:64px;height:6px;background:var(--rule-2)}
+.A .dur .r i{position:absolute;left:0;top:0;bottom:0;background:var(--deep)}
+.A .dur .r.under i{background:var(--muted)}
+.A .dur .r::after{content:"";position:absolute;left:33.3%;top:-4px;bottom:-4px;border-left:1px dashed var(--accent)}
+.A .notsent{font-size:12px;font-weight:600;color:var(--accent);border:1px dashed var(--accent);padding:4px 8px;background:var(--ground)}
+.A .phone{background:#1b2c36;box-shadow:0 0 0 1px #0c171d,0 24px 50px -20px rgba(15,36,48,.55)}
+.A .phone .side{background:#24394a}
+.A .phone .scr{background:#fff;color:#000}
+.A .phone .mhead{background:#f6f9fa;border-bottom:1px solid #dfe8ec;color:#000}
+.A .phone .mhead .av{background:var(--d6);color:#fff}
+.A .phone .when{color:#5f6f78}
+.A .phone .bub{background:#e8eef1;color:#0b1a22}
+.A .phone .compose{border:1px solid #cfdbe1;color:#66757d}
+.A .phone .home{background:#000}
+/* landing hero A */
+.A .hero{display:grid;grid-template-columns:1.05fr 1fr;min-height:620px;background:var(--shell)}
+.A .hero .copy{padding:40px 48px;display:flex;flex-direction:column;gap:20px;background:var(--ground);border-right:1px solid var(--rule)}
+.A .hero .copy .top-row{display:flex;justify-content:space-between;align-items:center}
+.A .hero h1{font-stretch:118%;font-weight:700;font-size:56px;line-height:1.02;letter-spacing:-.025em;max-width:13ch;margin-top:auto}
+.A .hero h1 em{font-style:italic;font-weight:500;color:var(--deep)}
+.A .hero p{font-size:17px;max-width:46ch;color:var(--muted)}
+.A .hero .cta{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.A .hero .fine{font-size:13px;color:var(--muted)}
+.A .hero .art{padding:40px 36px;display:flex;flex-direction:column;justify-content:center;gap:12px}
+.A .hero .card{background:var(--ground)}
+.A .hero .card .row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:10px 14px;border-bottom:1px solid var(--rule-2);font-size:13.5px;align-items:center}
+.A .hero .card .row:last-child{border-bottom:0}
+@media (max-width:820px){
+  .A .main{border-left:0;border-top:1px solid var(--rule)}
+  .A .figs{grid-template-columns:1fr 1fr}
+  .A .fig:nth-child(2){border-right:0}
+  .A .fig:nth-child(-n+2){border-bottom:1px solid var(--rule-2)}
+  .A .fig .v{font-size:28px}
+  .A .depth{height:140px}
+  .A .depth div span{font-size:11.5px}
+  .A .depth::after{content:"busy line"}
+  .A .drawer{position:relative;width:auto;border-left:0;border-top:1px solid var(--ink);box-shadow:none}
+  .A .scrim{display:none}
+  .A .rules{grid-template-columns:1fr}
+  .A .rule{border-right:0;border-bottom:1px solid var(--rule-2)}
+  .A .surv{grid-template-columns:1fr}
+  .A .surv .side{border-left:0;border-top:1px solid var(--rule)}
+  .A .hero{grid-template-columns:1fr}
+  .A .hero .copy{padding:24px 20px;border-right:0}
+  .A .hero h1{font-size:38px;margin-top:24px}
+  .A .hero .art{padding:20px 16px}
+  .A .bar{width:84px}
+}
+
+/* =====================================================================
+   OPTION B · BOX SCORE
+   ===================================================================== */
+.B{--ground:#ffffff;--ink:#141414;--muted:#5b5b5b;--rule:#d9d9d9;--rule-2:#ececec;--panel:#f5f5f4;--accent:#c8461f;--accent-ink:#ffffff;--accent-tint:#fbe9e2;--accent-deep:#9b3414;--warm:#f2b49c;
+  --cut:8px;font-family:"Geist",system-ui,sans-serif;color:var(--ink)}
+.B ::selection{background:var(--warm);color:var(--ink)}
+.B .chamfer{clip-path:polygon(0 0,calc(100% - var(--cut)) 0,100% var(--cut),100% 100%,0 100%)}
+.B .app{background:var(--ground);grid-template-columns:200px 1fr}
+.B .nav{background:var(--ink);color:#fff}
+.B .nav a{color:#d6d6d6;border-left:3px solid transparent;padding-left:9px}
+.B .nav a[aria-current]{color:#fff;border-left-color:var(--accent);background:#222;font-weight:600}
+.B .wm{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:19px;line-height:.95;text-transform:uppercase;letter-spacing:.01em}
+.B .wm small{display:block;font-family:"Geist",sans-serif;font-weight:500;text-transform:none;font-size:11.5px;color:#bdbdbd;letter-spacing:0}
+.B .banner{background:var(--accent-tint);color:var(--accent-deep);border-bottom:1px solid #f0c9b9}
+.B h3{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:32px;line-height:1;text-transform:uppercase;letter-spacing:.005em}
+.B .sub{color:var(--muted);font-size:13.5px}
+.B .btn{--cut:7px;font:600 13.5px/1 "Geist",sans-serif;padding:11px 16px;background:var(--ink);color:#fff;border:0;cursor:pointer;display:inline-flex;gap:8px;align-items:center;text-decoration:none;clip-path:polygon(0 0,calc(100% - var(--cut)) 0,100% var(--cut),100% 100%,0 100%);white-space:nowrap}
+.B .btn.pri{background:var(--accent)}
+.B .btn.ghost{background:var(--panel);color:var(--ink);box-shadow:inset 0 0 0 1px var(--rule)}
+.B .sect{border-top:3px solid var(--ink);margin-top:20px}
+.B .sect-h{display:flex;justify-content:space-between;align-items:baseline;padding:8px 0 10px;gap:10px;flex-wrap:wrap}
+.B .sect-h b{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:18px;text-transform:uppercase;letter-spacing:.02em}
+.B .sect-h span{font-size:12.5px;color:var(--muted)}
+/* line score: the signature */
+.B .ls{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.B .ls th{font-size:11.5px;font-weight:600;color:var(--muted);padding:6px 0;text-align:center;border-bottom:1px solid var(--ink)}
+.B .ls th:first-child{text-align:left}
+.B .ls td{text-align:center;padding:10px 0 8px;font-size:17px;font-weight:500;border-bottom:1px solid var(--rule)}
+.B .ls td:first-child{text-align:left;font-weight:600;font-size:13.5px}
+.B .ls .tot{background:var(--panel);font-family:"Big Shoulders Display",sans-serif;font-weight:900;font-size:30px;line-height:1;padding:8px 6px 6px}
+.B .ls .tot.flag{background:var(--accent);color:#fff}
+.B .ls th.totH{background:var(--panel);color:var(--ink)}
+.B .ls th.totH.flag{background:var(--accent);color:#fff;border-bottom-color:var(--accent)}
+.B .ls .gap{border-left:2px solid var(--ink)}
+.B .ls .peak{color:var(--accent);font-weight:700}
+.B .ls tr.bars td{border-bottom:0;padding:6px 3px 0;vertical-align:bottom;height:96px}
+.B .ls tr.bars i{display:block;margin:0 auto;width:62%;background:var(--ink)}
+.B .ls tr.bars i.hi{background:var(--accent)}
+.B .ls tr.split td{font-size:13px;color:var(--muted);padding:6px 0}
+/* box-score table */
+.B table.log thead th{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--ink)}
+.B table.log td{border-bottom:1px solid var(--rule-2)}
+.B table.log tr.sel td{background:var(--accent-tint)}
+.B table.log tfoot td{border-top:2px solid var(--ink);border-bottom:0;font-weight:700}
+.B .who b{font-weight:600}
+.B .who small{color:var(--muted)}
+.B .rate{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:22px;font-variant-numeric:tabular-nums;line-height:1}
+.B .rate.low{color:var(--accent-deep)}
+.B .t{--cut:5px;display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:4px 9px 4px 8px;white-space:nowrap;clip-path:polygon(0 0,calc(100% - var(--cut)) 0,100% var(--cut),100% 100%,0 100%);line-height:1.3}
+.B .t i{width:7px;height:7px;display:inline-block}
+.B .t.sent{background:var(--ink);color:#fff}
+.B .t.short,.B .t.asked{background:var(--panel);color:var(--ink);box-shadow:inset 0 0 0 1px var(--rule)}
+.B .t.short i{border:1.5px solid var(--muted)}
+.B .t.asked i{background:var(--muted);border-radius:50%}
+.B .t.nomatch{background:#fff;color:var(--muted);box-shadow:inset 0 0 0 1px var(--rule);text-decoration:line-through}
+.B .t.review{background:var(--accent-tint);color:var(--accent-deep);box-shadow:inset 0 0 0 1px var(--warm)}
+.B .t.review i{background:var(--accent)}
+.B .t.ok{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px var(--rule)}
+.B .t.cleared{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.B .split2{display:flex;height:10px;width:110px;gap:2px}
+.B .split2 i{display:block;height:100%}
+.B .split2 .c{background:var(--ink)}
+.B .split2 .o{background:repeating-linear-gradient(135deg,var(--ink) 0 1.5px,#fff 1.5px 4px);box-shadow:inset 0 0 0 1px var(--ink)}
+.B .scrim{position:absolute;inset:0;background:rgba(20,20,20,.42)}
+.B .drawer{position:absolute;top:0;right:0;bottom:0;width:420px;background:var(--ground);display:flex;flex-direction:column;box-shadow:-24px 0 48px -24px rgba(0,0,0,.5)}
+.B .drawer header{background:var(--ink);color:#fff;padding:18px 22px 16px;position:relative}
+.B .drawer header .jn{font-family:"Big Shoulders Display",sans-serif;font-weight:900;font-size:54px;line-height:.8;color:var(--accent);float:right;margin:0 40px 0 12px}
+.B .drawer header h4{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:28px;text-transform:uppercase;line-height:1}
+.B .drawer header p{color:#c9c9c9;font-size:13px;margin-top:6px}
+.B .drawer .x{position:absolute;top:12px;left:auto;right:12px;background:#2a2a2a;color:#fff;border:0;width:30px;height:30px;display:grid;place-items:center}
+.B .stat3{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--rule)}
+.B .stat3 div{padding:12px 16px;border-right:1px solid var(--rule-2)}
+.B .stat3 div:last-child{border-right:0}
+.B .stat3 small{display:block;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.B .stat3 b{font-family:"Big Shoulders Display",sans-serif;font-size:28px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.B .stat3 b.low{color:var(--accent-deep)}
+.B .plays{padding:14px 22px;font-size:13.5px}
+.B .plays b{font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.B .plays ol{list-style:none;margin-top:8px}
+.B .plays li{display:grid;grid-template-columns:62px 1fr auto;gap:10px;padding:7px 0;border-bottom:1px solid var(--rule-2)}
+.B .plays li span:first-child{color:var(--muted);font-variant-numeric:tabular-nums}
+.B .why{margin:4px 22px 0;padding:12px 14px;background:var(--panel);font-size:13.5px;border-top:3px solid var(--accent)}
+.B .drawer footer{margin-top:auto;padding:16px 22px;border-top:1px solid var(--rule);display:flex;gap:10px;align-items:center}
+.B .rules{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;margin-bottom:6px}
+.B .rule{background:var(--panel);padding:12px 16px;display:flex;gap:14px;align-items:center;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,0 100%)}
+.B .rule .big{font-family:"Big Shoulders Display",sans-serif;font-weight:900;font-size:38px;line-height:.9;color:var(--accent-deep)}
+.B .rule .big small{font-size:15px;font-weight:800}
+.B .rule b{display:block;font-size:14px}
+.B .rule span{font-size:12.5px;color:var(--muted)}
+.B .rules .edit{display:flex;align-items:center;font-size:12.5px;color:var(--muted);padding:0 4px}
+.B .surv{display:grid;grid-template-columns:1fr 340px;min-height:700px}
+.B .surv .side{background:var(--panel);border-left:1px solid var(--rule);display:flex;flex-direction:column;align-items:center;padding:20px 16px;gap:12px}
+.B .notsent{--cut:6px;font-size:12px;font-weight:700;color:#fff;background:var(--accent-deep);padding:5px 10px;text-transform:uppercase;letter-spacing:.05em;clip-path:polygon(0 0,calc(100% - var(--cut)) 0,100% var(--cut),100% 100%,0 100%)}
+.B .batch{display:flex;gap:6px;flex-wrap:wrap;font-size:12.5px;align-items:center;margin:4px 0 10px}
+.B .batch b{font-family:"Big Shoulders Display",sans-serif;font-size:16px;font-weight:800;text-transform:uppercase}
+.B .phone{background:#161616;box-shadow:0 0 0 1px #000,inset 0 0 0 2px #3a3a3a,0 24px 50px -20px rgba(0,0,0,.5)}
+.B .phone .side{background:#2a2a2a}
+.B .phone .scr{background:#fff;color:#000}
+.B .phone .mhead{background:#f7f7f7;border-bottom:1px solid #e3e3e3;color:#000}
+.B .phone .mhead .av{background:var(--accent);color:#fff}
+.B .phone .when{color:#6b6b6b}
+.B .phone .bub{background:#e9e9eb;color:#111}
+.B .phone .compose{border:1px solid #d6d6d6;color:#707070}
+.B .phone .home{background:#000}
+/* landing hero B */
+.B .hero{min-height:620px;display:grid;grid-template-rows:auto 1fr;background:var(--ground)}
+.B .hero .bar{background:var(--ink);color:#fff;display:flex;justify-content:space-between;align-items:center;padding:14px 32px}
+.B .hero .body{display:grid;grid-template-columns:1fr 1.05fr;gap:40px;padding:44px 32px 36px;align-items:center}
+.B .hero h1{font-family:"Big Shoulders Display",sans-serif;font-weight:900;font-size:84px;line-height:.88;text-transform:uppercase;letter-spacing:-.005em}
+.B .hero h1 span{color:var(--accent)}
+.B .hero p{font-size:17px;max-width:44ch;color:var(--muted);margin-top:18px}
+.B .hero .cta{display:flex;gap:14px;align-items:center;margin-top:24px;flex-wrap:wrap}
+.B .hero .fine{font-size:13px;color:var(--muted);margin-top:14px}
+.B .hero .board{border-top:3px solid var(--ink)}
+@media (max-width:820px){
+  .B .nav{border-bottom:3px solid var(--accent)}
+  .B .nav a{border-left:0;border-bottom:3px solid transparent;padding-left:9px}
+  .B .nav a[aria-current]{border-bottom-color:var(--accent);background:none}
+  .B .ls-wrap{overflow-x:auto}
+  .B .ls{min-width:560px}
+  .B .drawer{position:relative;width:auto;box-shadow:none}
+  .B .drawer .x{right:16px;left:auto}
+  .B .drawer header .jn{display:none}
+  .B .scrim{display:none}
+  .B .rules{grid-template-columns:1fr}
+  .B .surv{grid-template-columns:1fr}
+  .B .surv .side{border-left:0;border-top:1px solid var(--rule)}
+  .B .hero .bar{padding:12px 16px}
+  .B .hero .body{grid-template-columns:1fr;padding:24px 16px;gap:24px}
+  .B .hero h1{font-size:54px}
+  .B .split2{width:76px}
+  .B .app{grid-template-columns:1fr}
+  .B .hero .body>*{min-width:0}
+  .B table.log:not(.stack) td{padding:8px 4px}
+  .B table.log:not(.stack) .t{white-space:normal}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-over" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 16.5h14M5.5 13.5v-4M10 13.5V5M14.5 13.5V8"/></symbol>
+  <symbol id="i-team" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7.5" cy="7" r="2.6"/><path d="M2.8 16c.6-2.7 2.4-4.1 4.7-4.1s4.1 1.4 4.7 4.1"/><circle cx="14" cy="7.8" r="2"/><path d="M13.3 11.9c1.9 0 3.3 1.1 3.9 3.4"/></symbol>
+  <symbol id="i-surv" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3.5 4.5h13v9h-7l-3.5 3v-3H3.5z"/><path d="M7 9h6"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6.2 3.5 4 4.3c-.7 4.9 3.2 10.5 8 12.2l1.6-1.8-2.5-2.3-1.5 1C8.3 12.3 7.2 10.6 6.9 9l1.4-1z"/><path d="M12 4h4.5M12 7h4.5M12 10h2.5"/></symbol>
+  <symbol id="i-help" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="10" cy="10" r="7"/><path d="M8 8a2 2 0 1 1 2.8 1.8c-.5.3-.8.7-.8 1.3v.4"/><circle cx="10" cy="14" r=".5" fill="currentColor"/></symbol>
+  <symbol id="i-x" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 5l10 10M15 5 5 15"/></symbol>
+  <symbol id="i-check" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2.5 6.3 5 8.7l4.5-5"/></symbol>
+  <symbol id="i-diamond" viewBox="0 0 12 12"><path d="M6 1.2 10.8 6 6 10.8 1.2 6z" fill="currentColor"/></symbol>
+  <symbol id="i-play" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4.5v11l9-5.5z"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 3.5v9M6.2 9 10 12.8 13.8 9M4 16h12"/></symbol>
+  <symbol id="i-back" viewBox="0 0 12 20" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M10 2 2 10l8 8"/></symbol>
+  <symbol id="i-sig" viewBox="0 0 18 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx=".8"/><rect x="5" y="5.5" width="3" height="6.5" rx=".8"/><rect x="10" y="3" width="3" height="9" rx=".8"/><rect x="15" y="0" width="3" height="12" rx=".8"/></symbol>
+  <symbol id="i-bat" viewBox="0 0 27 12"><rect x=".5" y=".5" width="23" height="11" rx="3.2" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="18" height="8" rx="2" fill="currentColor"/><path d="M25 4v4c.8-.3 1.3-1 1.3-2s-.5-1.7-1.3-2z" fill="currentColor" opacity=".4"/></symbol>
+</svg>
+
+<div class="page">
+  <section class="intro">
+    <h1>Team Performance: two looks to pick from</h1>
+    <p class="line"><b>The app:</b> one screen where the owner or supervisor of a small call center (under 50 people) sees every call credited to the right person and every customer text the rules sent or held back. <b>The feeling:</b> clear and dense without being cold, and fair to the team.</p>
+    <p class="how">Both looks show the same sample day at Coral Line Support: the Overview, a Team row flagged for Review with its drawer open, the Surveys log with the drawn phone, and the landing page's first screen. Pick one. The logo comes next, on its own page.</p>
+    <div class="jump"><a href="#a">A · Harbor chart</a><a href="#b">B · Box score</a></div>
+
+    <table class="cmp">
+      <thead><tr><th></th><th>Ground</th><th>Accent</th><th>Display font</th><th>Body font</th><th>Shape</th></tr></thead>
+      <tbody>
+        <tr><th>A · Harbor chart</th><td><span class="sw" style="background:#e6f0f4"></span>Pale sea-blue shell <code>#e6f0f4</code> around white work areas</td><td><span class="sw" style="background:#a3125f"></span>Chart magenta <code>#a3125f</code></td><td>Archivo, semi-expanded</td><td>Archivo</td><td>Neatline: square corners, panels in a double hairline frame, buttons with an inset second rule, no rounding anywhere</td></tr>
+        <tr><th>B · Box score</th><td><span class="sw" style="background:#fff"></span>Pure white <code>#ffffff</code> with a solid ink side bar <code>#141414</code></td><td><span class="sw" style="background:#c8461f"></span>Coral orange <code>#c8461f</code></td><td>Big Shoulders Display, condensed caps</td><td>Geist</td><td>Chamfered: square shapes with one clipped top-right corner on buttons and tags, a 3px ink rule over each section</td></tr>
+        <tr><th>Closest shipped row</th><td colspan="5"><b>A</b> is closest to <b>no-show-rescue</b> (cool ground, square-ish, no shadows). It differs in Accent (magenta, not teal), both fonts, Ground (blue shell, not off-white) and Shape (double neatline, not single outline). <b>B</b> is closest to <b>quote-to-paid</b> (square shapes, ruled lists). It differs in Accent (coral orange, not teal), Ground (pure white with an ink bar, not warm off-white), both fonts, and Shape (chamfered corners and heavy section rules, not 2px ledger hairlines). Neither uses pill buttons with soft cards or Bricolage Grotesque.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ==================================================== A -->
+  <section class="A" id="a">
+    <div class="opt-head">
+      <div>
+        <h2>A · Harbor chart</h2>
+        <p class="tag">From the nautical charts every South Florida boater knows: white water, pale shallows, magenta only for the marks that matter.</p>
+      </div>
+      <p>The signature: call volume across the day is drawn like depth shading, busier hours in deeper blue with each hour's count set in italic like a chart sounding. A dashed magenta line marks a busy hour. Every survey state reads by its line as well as its colour: solid for sent, dashed for under 2 minutes, dotted for already asked, struck for no match.</p>
+      <div class="fit"><b>Why it fits</b>A supervisor glancing up from a busy floor needs to see what moved and where to look. Calm blues carry the data, magenta is kept for the one thing that needs a person (a Review flag, the main button), so nothing on screen shouts at the team. Archivo is a plain, sturdy working face with real italics for the figures.</div>
+    </div>
+
+    <p class="cap">1 · Overview</p>
+    <div class="screen">
+      <div class="banner"><span>Sample data. No text goes out and no CRM is reached.</span><span class="sp"></span><a href="#a">Reset demo</a><a href="#a">Back to the overview page</a><span>Built by TEKGUYZ</span></div>
+      <div class="app">
+        <nav class="nav" aria-label="Demo">
+          <div class="brand"><svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x=".5" y=".5" width="27" height="27" fill="#fff" stroke="#b7cdd7"/><path d="M4 19c3-2 5-2 8 0s5 2 8 0 4-1.6 4-1.6" fill="none" stroke="#24668b" stroke-width="1.6"/><path d="M4 14.5c3-2 5-2 8 0s5 2 8 0 4-1.6 4-1.6" fill="none" stroke="#79adc6" stroke-width="1.6"/><path d="M14 4.5 18 8.5 14 12.5 10 8.5z" fill="#a3125f"/></svg><div class="wm">Team Performance<small>Coral Line Support</small></div></div>
+          <a href="#a" aria-current="page"><svg><use href="#i-over"/></svg>Overview</a>
+          <a href="#a"><svg><use href="#i-team"/></svg>Team</a>
+          <a href="#a"><svg><use href="#i-surv"/></svg>Surveys</a>
+          <a href="#a"><svg><use href="#i-ext"/></svg>Extensions</a>
+          <a href="#a" class="help"><svg><use href="#i-help"/></svg>How it works</a>
+        </nav>
+        <div class="main">
+          <div class="top">
+            <div><h3>Overview</h3><p class="sub">Tuesday, November 17 · 8 AM to 6 PM · 14 people</p></div>
+            <span class="sp"></span>
+            <a class="btn" href="#a">Open surveys</a>
+          </div>
+          <div class="frame">
+            <div class="grad"></div>
+            <div class="figs">
+              <div class="fig"><div class="k">Calls processed</div><div class="v">182</div><div class="n">All credited to a person but 3</div></div>
+              <div class="fig"><div class="k">Texts sent</div><div class="v">104</div><div class="n">One rating text each</div></div>
+              <div class="fig"><div class="k">Screened out</div><div class="v">75</div><div class="n">54 under 2 min · 21 asked today</div></div>
+              <div class="fig flag"><div class="k">Open review flags</div><div class="v">2</div><div class="n"><a href="#a">See who on Team</a></div></div>
+            </div>
+          </div>
+          <div class="frame" style="margin-top:18px">
+            <div class="chart">
+              <div class="chart-head"><b>Calls by hour</b><span class="key">Fewer <i style="background:var(--d2)"></i><i style="background:var(--d3)"></i><i style="background:var(--d4)"></i><i style="background:var(--d5)"></i><i style="background:var(--d6)"></i> More</span></div>
+              <div class="depth" role="img" aria-label="Calls by hour: 8 AM 11, 9 AM 19, 10 AM 24, 11 AM 22, noon 17, 1 PM 15, 2 PM 21, 3 PM 23, 4 PM 18, 5 PM 12">
+                <div style="height:33%;background:var(--d2)"><span>11</span></div>
+                <div style="height:58%;background:var(--d4)"><span>19</span></div>
+                <div style="height:73%;background:var(--d6)"><span>24</span></div>
+                <div style="height:67%;background:var(--d5)"><span>22</span></div>
+                <div style="height:52%;background:var(--d3)"><span>17</span></div>
+                <div style="height:45%;background:var(--d3)"><span>15</span></div>
+                <div style="height:64%;background:var(--d5)"><span>21</span></div>
+                <div style="height:70%;background:var(--d6)"><span>23</span></div>
+                <div style="height:55%;background:var(--d4)"><span>18</span></div>
+                <div style="height:36%;background:var(--d2)"><span>12</span></div>
+              </div>
+              <div class="hours"><span>8a</span><span>9a</span><span>10a</span><span>11a</span><span>12p</span><span>1p</span><span>2p</span><span>3p</span><span>4p</span><span>5p</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="cap">2 · Team, with Lucia's row flagged for Review and her drawer open</p>
+    <div class="screen team">
+      <div class="app">
+        <nav class="nav" aria-label="Demo">
+          <div class="brand"><svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x=".5" y=".5" width="27" height="27" fill="#fff" stroke="#b7cdd7"/><path d="M4 19c3-2 5-2 8 0s5 2 8 0 4-1.6 4-1.6" fill="none" stroke="#24668b" stroke-width="1.6"/><path d="M4 14.5c3-2 5-2 8 0s5 2 8 0 4-1.6 4-1.6" fill="none" stroke="#79adc6" stroke-width="1.6"/><path d="M14 4.5 18 8.5 14 12.5 10 8.5z" fill="#a3125f"/></svg><div class="wm">Team Performance<small>Coral Line Support</small></div></div>
+          <a href="#a"><svg><use href="#i-over"/></svg>Overview</a>
+          <a href="#a" aria-current="page"><svg><use href="#i-team"/></svg>Team</a>
+          <a href="#a"><svg><use href="#i-surv"/></svg>Surveys</a>
+          <a href="#a"><svg><use href="#i-ext"/></svg>Extensions</a>
+          <a href="#a" class="help"><svg><use href="#i-help"/></svg>How it works</a>
+        </nav>
+        <div class="main">
+          <div class="top"><div><h3>Team</h3><p class="sub">Credit for calls and offline work, by extension</p></div></div>
+          <table class="log stack">
+            <thead><tr><th>Ext</th><th>Person</th><th>Credited time</th><th>Updates</th><th>Focus</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">101</td><td><div class="who">Rosa Delgado<small>CRM-1042</small></div></td><td class="hide-s"><div class="bar"><i class="c" style="width:58%"></i><i class="o" style="width:36%"></i></div><small class="sub">6h 12m</small></td><td class="mono hide-s">61</td><td><span class="rate">100</span></td><td><span class="t ok"><svg><use href="#i-check"/></svg>On track</span></td></tr>
+              <tr><td class="mono">102</td><td><div class="who">Marcus Bell<small>CRM-1043</small></div></td><td class="hide-s"><div class="bar"><i class="c" style="width:66%"></i><i class="o" style="width:22%"></i></div><small class="sub">5h 40m</small></td><td class="mono hide-s">44</td><td><span class="rate">88</span></td><td><span class="t ok"><svg><use href="#i-check"/></svg>On track</span></td></tr>
+              <tr><td class="mono">104</td><td><div class="who">Devon Okafor<small>CRM-1045</small></div></td><td class="hide-s"><div class="bar"><i class="c" style="width:44%"></i><i class="o" style="width:48%"></i></div><small class="sub">6h 05m</small></td><td class="mono hide-s">51</td><td><span class="rate low">36</span></td><td><span class="t review"><svg><use href="#i-diamond"/></svg>Review</span></td></tr>
+              <tr class="sel"><td class="mono">105</td><td><div class="who">Lucia Moreno<small>CRM-1046</small></div></td><td class="hide-s"><div class="bar"><i class="c" style="width:34%"></i><i class="o" style="width:52%"></i></div><small class="sub">5h 15m</small></td><td class="mono hide-s">49</td><td><span class="rate low">26</span></td><td><span class="t review"><svg><use href="#i-diamond"/></svg>Review</span></td></tr>
+              <tr><td class="mono">107</td><td><div class="who">Priya Nair<small>CRM-1048</small></div></td><td class="hide-s"><div class="bar"><i class="c" style="width:40%"></i><i class="o" style="width:50%"></i></div><small class="sub">5h 58m</small></td><td class="mono hide-s">57</td><td><span class="rate">31</span></td><td><span class="t cleared"><svg><use href="#i-check"/></svg>Cleared by Odalys</span></td></tr>
+              <tr><td class="mono">108</td><td><div class="who">Jamal Whitfield<small>CRM-1049</small></div></td><td class="hide-s"><div class="bar"><i class="c" style="width:70%"></i><i class="o" style="width:18%"></i></div><small class="sub">5h 52m</small></td><td class="mono hide-s">39</td><td><span class="rate">93</span></td><td><span class="t ok"><svg><use href="#i-check"/></svg>On track</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="scrim"></div>
+      <aside class="drawer" aria-label="Lucia Moreno">
+        <header><button class="x" aria-label="Close"><svg width="16" height="16"><use href="#i-x"/></svg></button><h3 style="font-size:22px">Lucia Moreno</h3><p class="sub">Ext 105 · CRM-1046 · <span class="t review" style="vertical-align:1px"><svg><use href="#i-diamond"/></svg>Review</span></p></header>
+        <dl class="kv"><dt>Calls</dt><dd class="mono">14 calls · 1h 48m</dd><dt>Offline work</dt><dd class="mono">3h 10m · 2 blocks</dd><dt>Updates logged</dt><dd class="mono">49</dd><dt>Focus rating</dt><dd><span class="rate low">26</span></dd></dl>
+        <div class="blocks"><b>Her day, 8 AM to 6 PM</b>
+          <div class="tl" aria-hidden="true"><i class="c" style="grid-column:2/4"></i><i class="c" style="grid-column:5/7"></i><i class="o" style="grid-column:7/13"></i><i class="c" style="grid-column:14/16"></i><i class="c" style="grid-column:17/19"></i><i class="o" style="grid-column:25/32"></i><i class="c" style="grid-column:33/36"></i></div>
+          <span class="key"><i style="background:var(--deep)"></i> Calls &nbsp; <i style="background:var(--land);outline:1px solid #c8b67f"></i> Case review 9:40–11:10, paperwork 2:15–3:55</span>
+        </div>
+        <p class="why">49 updates across 190 offline minutes gives a focus rating of 26. Under 40 asks for a look, not a verdict: long case reviews often log few updates.</p>
+        <footer><button class="btn pri"><svg width="14" height="14"><use href="#i-check"/></svg>Clear flag</button><button class="btn">Close</button></footer>
+      </aside>
+    </div>
+
+    <p class="cap">3 · Surveys, with a Sent row open on the phone</p>
+    <div class="screen">
+      <div class="surv">
+        <div class="main" style="border-left:0">
+          <div class="top"><div><h3>Surveys</h3><p class="sub">Every call, newest first, and what the two rules did with it</p></div><span class="sp"></span><button class="btn"><svg width="15" height="15"><use href="#i-dl"/></svg>Export CSV</button><button class="btn pri"><svg width="13" height="13"><use href="#i-play"/></svg>Run sample batch</button></div>
+          <div class="rules">
+            <div class="rule"><svg viewBox="0 0 84 26" aria-hidden="true"><rect x="0" y="10" width="84" height="6" fill="#dbe7ec"/><rect x="0" y="10" width="20" height="6" fill="#4a6472"/><rect x="28" y="10" width="56" height="6" fill="#164e6e"/><path d="M28 3v20" stroke="#a3125f" stroke-dasharray="3 2"/></svg><div><b>2 minutes or longer</b><span>Shorter calls get no text.</span></div></div>
+            <div class="rule"><svg viewBox="0 0 84 26" aria-hidden="true"><path d="M2 13h80" stroke="#b7cdd7"/><circle cx="8" cy="13" r="5" fill="#164e6e"/><circle cx="46" cy="13" r="5" fill="#fff" stroke="#4a6472" stroke-dasharray="2 1.6" stroke-width="1.4"/><path d="M8 4h70" stroke="#a3125f" stroke-dasharray="3 2"/><path d="M78 1v6" stroke="#a3125f"/></svg><div><b>Once every 24 hours</b><span>A customer asked today is not asked again.</span></div></div>
+            <div class="edit">Edit rules: not available in the demo</div>
+          </div>
+          <table class="log stack">
+            <thead><tr><th>Time</th><th>Person</th><th>Length</th><th>Customer</th><th>Outcome</th></tr></thead>
+            <tbody>
+              <tr class="sel"><td class="mono">2:41 PM</td><td><div class="who">Lucia Moreno<small>Ext 105</small></div></td><td class="hide-s"><span class="dur"><span class="r"><i style="width:70%"></i></span><span class="mono">4:12</span></span></td><td class="mono hide-s">(305) ···-0142</td><td><span class="t sent"><svg><use href="#i-check"/></svg>Sent</span></td></tr>
+              <tr><td class="mono">2:38 PM</td><td><div class="who">Marcus Bell<small>Ext 102</small></div></td><td class="hide-s"><span class="dur"><span class="r under"><i style="width:30%"></i></span><span class="mono">1:47</span></span></td><td class="mono hide-s">(786) ···-0118</td><td><span class="t short">Skipped: under 2 minutes</span></td></tr>
+              <tr><td class="mono">2:31 PM</td><td><div class="who">Jamal Whitfield<small>Ext 108</small></div></td><td class="hide-s"><span class="dur"><span class="r"><i style="width:51%"></i></span><span class="mono">3:05</span></span></td><td class="mono hide-s">(954) ···-0107</td><td><span class="t asked">Skipped: already asked today</span></td></tr>
+              <tr><td class="mono">2:29 PM</td><td><div class="who">Unknown<small>Ext 120</small></div></td><td class="hide-s"><span class="dur"><span class="r"><i style="width:47%"></i></span><span class="mono">2:50</span></span></td><td class="mono hide-s">(561) ···-0163</td><td><span class="t nomatch">No match: extension not mapped</span></td></tr>
+              <tr><td class="mono">2:22 PM</td><td><div class="who">Rosa Delgado<small>Ext 101</small></div></td><td class="hide-s"><span class="dur"><span class="r"><i style="width:100%"></i></span><span class="mono">6:30</span></span></td><td class="mono hide-s">(305) ···-0119</td><td><span class="t sent"><svg><use href="#i-check"/></svg>Sent</span></td></tr>
+              <tr><td class="mono">2:17 PM</td><td><div class="who">Priya Nair<small>Ext 107</small></div></td><td class="hide-s"><span class="dur"><span class="r"><i style="width:33.3%"></i></span><span class="mono">2:00</span></span></td><td class="mono hide-s">(954) ···-0131</td><td><span class="t sent"><svg><use href="#i-check"/></svg>Sent</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="side">
+          <span class="notsent">Not sent: demo</span>
+          <div class="phone" aria-label="The text Lucia's customer would get">
+            <i class="side" style="left:-3px;top:110px;height:28px"></i><i class="side" style="left:-3px;top:156px;height:52px"></i><i class="side" style="right:-3px;top:170px;height:72px"></i>
+            <div class="scr">
+              <div class="island"></div>
+              <div class="status"><span>2:41</span><span class="ic"><svg width="18" height="12"><use href="#i-sig"/></svg><svg width="27" height="12"><use href="#i-bat"/></svg></span></div>
+              <div class="mhead"><svg class="back" width="11" height="18" style="color:#2b7fff"><use href="#i-back"/></svg><span class="av">CL</span><span>Coral Line Support</span></div>
+              <div class="thread"><div class="when">Text Message · Today 2:41 PM</div><div class="bub">Hi, thanks for speaking with Lucia at Coral Line Support. How did we do? Reply 1 to 5.</div></div>
+              <div class="compose">Text Message</div>
+              <span class="home"></span>
+            </div>
+          </div>
+          <p class="sub" style="text-align:center;max-width:30ch">Sent because the call ran 4:12 and this number had no text in the last 24 hours.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="cap">4 · Landing page, first screen</p>
+    <div class="screen">
+      <div class="hero">
+        <div class="copy">
+          <div class="top-row"><div class="brand" style="padding:0"><svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect x=".5" y=".5" width="27" height="27" fill="#fff" stroke="#b7cdd7"/><path d="M4 19c3-2 5-2 8 0s5 2 8 0 4-1.6 4-1.6" fill="none" stroke="#24668b" stroke-width="1.6"/><path d="M4 14.5c3-2 5-2 8 0s5 2 8 0 4-1.6 4-1.6" fill="none" stroke="#79adc6" stroke-width="1.6"/><path d="M14 4.5 18 8.5 14 12.5 10 8.5z" fill="#a3125f"/></svg><div class="wm">Team Performance</div></div><a class="btn" href="#a">Try the demo</a></div>
+          <h1>Phone logs that credit the right person, <em>and surveys that know when to stop.</em></h1>
+          <p>For call centers and service teams under 50 people that take calls all day. Every desk-phone call lands on the right person's record. Customers get one rating text, only when asking is worth it.</p>
+          <div class="cta"><a class="btn pri" href="#a">Try the demo</a><span class="fine">No sign-up. Sample data. Texts and the CRM are simulated.</span></div>
+        </div>
+        <div class="art">
+          <div class="frame card">
+            <div class="grad"></div>
+            <div class="row"><span><b>2:41 PM</b> · Lucia Moreno · 4:12</span><span class="t sent"><svg><use href="#i-check"/></svg>Sent</span></div>
+            <div class="row"><span><b>2:38 PM</b> · Marcus Bell · 1:47</span><span class="t short">Under 2 minutes</span></div>
+            <div class="row"><span><b>2:31 PM</b> · Jamal Whitfield · 3:05</span><span class="t asked">Asked today</span></div>
+            <div class="row"><span><b>Lucia Moreno</b> · focus 26</span><span class="t review"><svg><use href="#i-diamond"/></svg>Review</span></div>
+          </div>
+          <p class="sub">A flag is a question for a person, never a verdict.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== B -->
+  <section class="B" id="b">
+    <div class="opt-head">
+      <div>
+        <h2>B · Box score</h2>
+        <p class="tag">From the sports page box score: every player credited for what they did, in tight columns with a total at the bottom.</p>
+      </div>
+      <p>The signature: the day's calls read as a line score, one column per hour like innings, with the totals boxed at the end and the open flags in the team colour. The Team table is a box score with a team total row. Survey states read by mark as well as colour: solid for sent, open square for under 2 minutes, dot for already asked, struck for no match.</p>
+      <div class="fit"><b>Why it fits</b>The product's whole job is giving each person credit, and a box score is the most familiar credit sheet there is. White ground and black type keep a dense table easy to read in a bright office. Coral orange is Coral Line's team colour, used for the main button and for flags; tall condensed caps give the headings energy without making the numbers feel like a scoreboard to fear.</div>
+    </div>
+
+    <p class="cap">1 · Overview</p>
+    <div class="screen">
+      <div class="banner"><span>Sample data. No text goes out and no CRM is reached.</span><span class="sp"></span><a href="#b">Reset demo</a><a href="#b">Back to the overview page</a><span>Built by TEKGUYZ</span></div>
+      <div class="app">
+        <nav class="nav" aria-label="Demo">
+          <div class="brand"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M0 0h22l8 8v22H0z" fill="#c8461f"/><path d="M8 8v14M12 8v14M16 8v14M20 8v14M5.5 19.5 23 10.5" fill="none" stroke="#fff" stroke-width="2.2"/></svg><div class="wm">Team Performance<small>Coral Line Support</small></div></div>
+          <a href="#b" aria-current="page"><svg><use href="#i-over"/></svg>Overview</a>
+          <a href="#b"><svg><use href="#i-team"/></svg>Team</a>
+          <a href="#b"><svg><use href="#i-surv"/></svg>Surveys</a>
+          <a href="#b"><svg><use href="#i-ext"/></svg>Extensions</a>
+          <a href="#b" class="help"><svg><use href="#i-help"/></svg>How it works</a>
+        </nav>
+        <div class="main">
+          <div class="top"><div><h3>Today's line</h3><p class="sub">Tuesday, November 17 · 8 AM to 6 PM · 14 people</p></div><span class="sp"></span><a class="btn ghost" href="#b">Open surveys</a></div>
+          <div class="sect" style="margin-top:6px">
+            <div class="sect-h"><b>Calls by hour</b><span>Busiest hour in coral</span></div>
+            <div class="ls-wrap">
+            <table class="ls">
+              <thead><tr><th style="width:110px"></th><th>8a</th><th>9a</th><th>10a</th><th>11a</th><th>12p</th><th>1p</th><th>2p</th><th>3p</th><th>4p</th><th>5p</th><th class="totH gap">Calls</th><th class="totH">Texts</th><th class="totH">Skipped</th><th class="totH flag">Flags</th></tr></thead>
+              <tbody>
+                <tr class="bars" aria-hidden="true"><td></td><td><i style="height:42px"></i></td><td><i style="height:72px"></i></td><td><i class="hi" style="height:92px"></i></td><td><i style="height:84px"></i></td><td><i style="height:65px"></i></td><td><i style="height:57px"></i></td><td><i style="height:80px"></i></td><td><i style="height:88px"></i></td><td><i style="height:69px"></i></td><td><i style="height:46px"></i></td><td class="gap" colspan="4"></td></tr>
+                <tr><td>Coral Line</td><td>11</td><td>19</td><td class="peak">24</td><td>22</td><td>17</td><td>15</td><td>21</td><td>23</td><td>18</td><td>12</td><td class="tot gap">182</td><td class="tot">104</td><td class="tot">75</td><td class="tot flag">2</td></tr>
+                <tr class="split"><td>Texts sent</td><td>6</td><td>11</td><td>13</td><td>12</td><td>10</td><td>9</td><td>12</td><td>13</td><td>11</td><td>7</td><td class="gap" colspan="4" style="text-align:left;padding-left:12px">54 under 2 min · 21 asked today · 3 no match</td></tr>
+              </tbody>
+            </table>
+            </div>
+          </div>
+          <div class="sect">
+            <div class="sect-h"><b>Needs a look</b><span>2 open flags</span></div>
+            <table class="log"><tbody>
+              <tr><td class="mono" style="width:56px">104</td><td>Devon Okafor</td><td><span class="rate low">36</span></td><td style="text-align:right"><span class="t review"><i></i>Review</span></td></tr>
+              <tr><td class="mono">105</td><td>Lucia Moreno</td><td><span class="rate low">26</span></td><td style="text-align:right"><span class="t review"><i></i>Review</span></td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="cap">2 · Team, with Lucia's row flagged for Review and her drawer open</p>
+    <div class="screen team">
+      <div class="app">
+        <nav class="nav" aria-label="Demo">
+          <div class="brand"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M0 0h22l8 8v22H0z" fill="#c8461f"/><path d="M8 8v14M12 8v14M16 8v14M20 8v14M5.5 19.5 23 10.5" fill="none" stroke="#fff" stroke-width="2.2"/></svg><div class="wm">Team Performance<small>Coral Line Support</small></div></div>
+          <a href="#b"><svg><use href="#i-over"/></svg>Overview</a>
+          <a href="#b" aria-current="page"><svg><use href="#i-team"/></svg>Team</a>
+          <a href="#b"><svg><use href="#i-surv"/></svg>Surveys</a>
+          <a href="#b"><svg><use href="#i-ext"/></svg>Extensions</a>
+          <a href="#b" class="help"><svg><use href="#i-help"/></svg>How it works</a>
+        </nav>
+        <div class="main">
+          <div class="top"><div><h3>Team</h3><p class="sub">Credit for calls and offline work, by extension</p></div><span class="sp"></span><span class="sub"><span class="split2" style="display:inline-flex;width:40px;vertical-align:-1px"><i class="c" style="width:50%"></i><i class="o" style="width:50%"></i></span>&nbsp; calls · offline work</span></div>
+          <table class="log stack">
+            <thead><tr><th>Ext</th><th>Person</th><th>Credited</th><th>Upd</th><th>Focus</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td class="mono">101</td><td><div class="who"><b>Rosa Delgado</b><small>CRM-1042</small></div></td><td class="hide-s"><span class="split2"><i class="c" style="width:58%"></i><i class="o" style="width:36%"></i></span><small class="sub">6h 12m</small></td><td class="mono hide-s">61</td><td><span class="rate">100</span></td><td><span class="t ok">On track</span></td></tr>
+              <tr><td class="mono">102</td><td><div class="who"><b>Marcus Bell</b><small>CRM-1043</small></div></td><td class="hide-s"><span class="split2"><i class="c" style="width:66%"></i><i class="o" style="width:22%"></i></span><small class="sub">5h 40m</small></td><td class="mono hide-s">44</td><td><span class="rate">88</span></td><td><span class="t ok">On track</span></td></tr>
+              <tr><td class="mono">104</td><td><div class="who"><b>Devon Okafor</b><small>CRM-1045</small></div></td><td class="hide-s"><span class="split2"><i class="c" style="width:44%"></i><i class="o" style="width:48%"></i></span><small class="sub">6h 05m</small></td><td class="mono hide-s">51</td><td><span class="rate low">36</span></td><td><span class="t review"><i></i>Review</span></td></tr>
+              <tr class="sel"><td class="mono">105</td><td><div class="who"><b>Lucia Moreno</b><small>CRM-1046</small></div></td><td class="hide-s"><span class="split2"><i class="c" style="width:34%"></i><i class="o" style="width:52%"></i></span><small class="sub">5h 15m</small></td><td class="mono hide-s">49</td><td><span class="rate low">26</span></td><td><span class="t review"><i></i>Review</span></td></tr>
+              <tr><td class="mono">107</td><td><div class="who"><b>Priya Nair</b><small>CRM-1048</small></div></td><td class="hide-s"><span class="split2"><i class="c" style="width:40%"></i><i class="o" style="width:50%"></i></span><small class="sub">5h 58m</small></td><td class="mono hide-s">57</td><td><span class="rate">31</span></td><td><span class="t cleared">Cleared by Odalys</span></td></tr>
+            </tbody>
+            <tfoot><tr><td class="hide-s"></td><td>Team, 14 people</td><td class="hide-s mono">78h 20m</td><td class="mono hide-s">702</td><td class="hide-s"></td><td>2 open</td></tr></tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="scrim"></div>
+      <aside class="drawer" aria-label="Lucia Moreno">
+        <header><span class="jn">105</span><button class="x" aria-label="Close"><svg width="16" height="16"><use href="#i-x"/></svg></button><h4>Lucia Moreno</h4><p>CRM-1046 · <span class="t review"><i></i>Review</span></p></header>
+        <div class="stat3"><div><small>Calls</small><b>14</b></div><div><small>Offline</small><b>3h 10m</b></div><div><small>Focus</small><b class="low">26</b></div></div>
+        <div class="plays"><b>Her day</b>
+          <ol>
+            <li><span>9:40 AM</span><span>Case review</span><span class="mono">1h 30m</span></li>
+            <li><span>11:24 AM</span><span>Call · (305) ···-0177</span><span class="mono">5:02</span></li>
+            <li><span>2:15 PM</span><span>Paperwork</span><span class="mono">1h 40m</span></li>
+            <li><span>2:41 PM</span><span>Call · (305) ···-0142</span><span class="mono">4:12</span></li>
+          </ol>
+        </div>
+        <p class="why">49 updates across 190 offline minutes gives a focus rating of 26. Under 40 asks for a look, not a verdict: long case reviews often log few updates.</p>
+        <footer><button class="btn pri">Clear flag</button><button class="btn ghost">Close</button></footer>
+      </aside>
+    </div>
+
+    <p class="cap">3 · Surveys, after one sample batch, with a Sent row open on the phone</p>
+    <div class="screen">
+      <div class="surv">
+        <div class="main">
+          <div class="top"><div><h3>Surveys</h3><p class="sub">Every call, newest first, and what the two rules did with it</p></div><span class="sp"></span><button class="btn ghost"><svg width="15" height="15"><use href="#i-dl"/></svg>Export CSV</button><button class="btn pri"><svg width="13" height="13"><use href="#i-play"/></svg>Run sample batch</button></div>
+          <div class="rules">
+            <div class="rule"><span class="big">2<small>MIN</small></span><div><b>2 minutes or longer</b><span>Shorter calls get no text.</span></div></div>
+            <div class="rule"><span class="big">24<small>HR</small></span><div><b>Once every 24 hours</b><span>A customer asked today is not asked again.</span></div></div>
+            <div class="edit">Edit rules: not available in the demo</div>
+          </div>
+          <div class="batch"><b>Last batch</b> 20 calls: 13 sent, 4 under 2 minutes, 2 already asked today, 1 not mapped</div>
+          <table class="log stack">
+            <thead><tr><th>Time</th><th>Person</th><th>Length</th><th>Customer</th><th>Outcome</th></tr></thead>
+            <tbody>
+              <tr class="sel"><td class="mono">2:41 PM</td><td><div class="who"><b>Lucia Moreno</b><small>Ext 105</small></div></td><td class="mono hide-s">4:12</td><td class="mono hide-s">(305) ···-0142</td><td><span class="t sent"><i style="background:#fff"></i>Sent</span></td></tr>
+              <tr><td class="mono">2:38 PM</td><td><div class="who"><b>Marcus Bell</b><small>Ext 102</small></div></td><td class="mono hide-s">1:47</td><td class="mono hide-s">(786) ···-0118</td><td><span class="t short"><i></i>Skipped: under 2 minutes</span></td></tr>
+              <tr><td class="mono">2:31 PM</td><td><div class="who"><b>Jamal Whitfield</b><small>Ext 108</small></div></td><td class="mono hide-s">3:05</td><td class="mono hide-s">(954) ···-0107</td><td><span class="t asked"><i></i>Skipped: already asked today</span></td></tr>
+              <tr><td class="mono">2:29 PM</td><td><div class="who"><b>Unknown</b><small>Ext 120</small></div></td><td class="mono hide-s">2:50</td><td class="mono hide-s">(561) ···-0163</td><td><span class="t nomatch">No match: extension not mapped</span></td></tr>
+              <tr><td class="mono">2:22 PM</td><td><div class="who"><b>Rosa Delgado</b><small>Ext 101</small></div></td><td class="mono hide-s">6:30</td><td class="mono hide-s">(305) ···-0119</td><td><span class="t sent"><i style="background:#fff"></i>Sent</span></td></tr>
+              <tr><td class="mono">2:17 PM</td><td><div class="who"><b>Priya Nair</b><small>Ext 107</small></div></td><td class="mono hide-s">2:00</td><td class="mono hide-s">(954) ···-0131</td><td><span class="t sent"><i style="background:#fff"></i>Sent</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="side">
+          <span class="notsent">Not sent: demo</span>
+          <div class="phone" aria-label="The text Lucia's customer would get">
+            <i class="side" style="left:-3px;top:110px;height:28px"></i><i class="side" style="left:-3px;top:156px;height:52px"></i><i class="side" style="right:-3px;top:170px;height:72px"></i>
+            <div class="scr">
+              <div class="island"></div>
+              <div class="status"><span>2:41</span><span class="ic"><svg width="18" height="12"><use href="#i-sig"/></svg><svg width="27" height="12"><use href="#i-bat"/></svg></span></div>
+              <div class="mhead"><svg class="back" width="11" height="18" style="color:#2b7fff"><use href="#i-back"/></svg><span class="av">CL</span><span>Coral Line Support</span></div>
+              <div class="thread"><div class="when">Text Message · Today 2:41 PM</div><div class="bub">Hi, thanks for speaking with Lucia at Coral Line Support. How did we do? Reply 1 to 5.</div></div>
+              <div class="compose">Text Message</div>
+              <span class="home"></span>
+            </div>
+          </div>
+          <p class="sub" style="text-align:center;max-width:30ch">Sent because the call ran 4:12 and this number had no text in the last 24 hours.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="cap">4 · Landing page, first screen</p>
+    <div class="screen">
+      <div class="hero">
+        <div class="bar"><div class="brand" style="padding:0"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path d="M0 0h22l8 8v22H0z" fill="#c8461f"/><path d="M8 8v14M12 8v14M16 8v14M20 8v14M5.5 19.5 23 10.5" fill="none" stroke="#fff" stroke-width="2.2"/></svg><div class="wm">Team Performance</div></div><a class="btn pri" href="#b">Try the demo</a></div>
+        <div class="body">
+          <div>
+            <h1>Credit the right person. <span>Ask once.</span></h1>
+            <p>Phone logs that credit the right person, and surveys that know when to stop. For call centers and service teams under 50 people that take calls all day.</p>
+            <div class="cta"><a class="btn pri" href="#b">Try the demo</a><a class="btn ghost" href="#b">How the rules work</a></div>
+            <p class="fine">No sign-up. Sample data. Texts and the CRM are simulated.</p>
+          </div>
+          <div class="board">
+            <div class="sect-h"><b>Coral Line · Tuesday</b><span>Sample day</span></div>
+            <div class="ls-wrap">
+            <table class="ls">
+              <thead><tr><th style="width:70px"></th><th>8a</th><th>10a</th><th>12p</th><th>2p</th><th>4p</th><th class="totH gap">Calls</th><th class="totH">Texts</th><th class="totH flag">Flags</th></tr></thead>
+              <tbody>
+                <tr class="bars" aria-hidden="true"><td></td><td><i style="height:56px"></i></td><td><i class="hi" style="height:88px"></i></td><td><i style="height:60px"></i></td><td><i style="height:84px"></i></td><td><i style="height:56px"></i></td><td class="gap" colspan="3"></td></tr>
+                <tr><td>Calls</td><td>30</td><td class="peak">46</td><td>32</td><td>44</td><td>30</td><td class="tot gap">182</td><td class="tot">104</td><td class="tot flag">2</td></tr>
+              </tbody>
+            </table>
+            </div>
+            <table class="log" style="margin-top:12px"><tbody>
+              <tr><td class="mono">2:41 PM</td><td>Lucia Moreno · 4:12</td><td style="text-align:right"><span class="t sent"><i style="background:#fff"></i>Sent</span></td></tr>
+              <tr><td class="mono">2:38 PM</td><td>Marcus Bell · 1:47</td><td style="text-align:right"><span class="t short"><i></i>Under 2 minutes</span></td></tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>
