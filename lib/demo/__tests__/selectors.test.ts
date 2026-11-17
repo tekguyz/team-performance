@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { callsFiltered, overview, teamRows, volumeByHour } from "@/lib/demo/selectors";
+import { callsFiltered, outcomeCounts, overview, teamRows, volumeByHour } from "@/lib/demo/selectors";
 import { initialState, reducer, type DemoState } from "@/lib/demo/state";
 
 function after(n: number): DemoState {
@@ -49,5 +49,15 @@ describe("overview open flags", () => {
     const flagged = teamRows(s0).find((r) => r.needsReview)!;
     const s1 = reducer(s0, { type: "clearFlag", personId: flagged.person.id, at: "2026-11-17T12:00:00.000Z" });
     expect(overview(s1).openFlags).toBe(2);
+  });
+});
+
+describe("outcomeCounts", () => {
+  it("counts each outcome and adds up to the log", () => {
+    const s = after(5);
+    const c = outcomeCounts(s);
+    expect(c.all).toBe(s.calls.length);
+    expect(c.sent + c.skipped_short + c.skipped_daily_cap + c.no_match).toBe(c.all);
+    expect(c.sent).toBe(overview(s).sent);
   });
 });
