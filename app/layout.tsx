@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Atkinson_Hyperlegible_Next } from "next/font/google";
 import { BRAND } from "@/lib/brand";
 import { SITE_URL } from "@/lib/site";
@@ -13,11 +13,24 @@ const atkinson = Atkinson_Hyperlegible_Next({
   fallback: ["system-ui", "sans-serif"],
 });
 
+const DESCRIPTION =
+  "Every desk-phone call credited to the right person, offline work counted too, and a rating text only when asking is worth it. Try the demo with a made-up call center.";
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: BRAND.product,
-  description: "Phone logs that credit the right person, and surveys that know when to stop.",
+  title: `${BRAND.product}: phone logs that credit the right person`,
+  description: DESCRIPTION,
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: BRAND.product,
+    title: `${BRAND.product}: phone logs that credit the right person`,
+    description: DESCRIPTION,
+  },
+  twitter: { card: "summary_large_image" },
 };
+
+export const viewport: Viewport = { themeColor: "#ffffff" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
