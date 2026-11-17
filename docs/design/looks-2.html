@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Team Performance · Two more looks</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Next:wght@400;500;600;700;800&family=Bitter:wght@600;700;800&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ---------- page chrome (neutral, not part of either look) ---------- */
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:#ececea;color:#1b1b1b;font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.page{max-width:1320px;margin:0 auto;padding:40px 24px 96px}
+.intro h1{font-size:28px;line-height:1.2;font-weight:700;letter-spacing:-.01em}
+.intro .line{margin-top:12px;max-width:72ch;font-size:17px}
+.intro .how{margin-top:10px;max-width:72ch;color:#4a4a48}
+.jump{display:flex;gap:18px;flex-wrap:wrap;margin-top:20px}
+.jump a{color:#1b1b1b;font-weight:600;text-decoration:underline;text-underline-offset:3px}
+.cmp{margin-top:28px;width:100%;border-collapse:collapse;background:#fff;font-size:14px}
+.cmp th,.cmp td{border:1px solid #d6d6d2;padding:10px 12px;text-align:left;vertical-align:top}
+.cmp thead th{background:#f6f6f4;font-weight:600}
+.cmp .sw{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin-right:6px;border:1px solid rgba(0,0,0,.2)}
+.opt-head{margin-top:72px;display:grid;grid-template-columns:1fr 1fr;gap:16px 40px;align-items:start}
+.opt-head h2{font-size:24px;line-height:1.2}
+.opt-head .tag{font-size:13px;color:#55554f;margin-top:4px}
+.opt-head p{max-width:62ch}
+.opt-head .fit{grid-column:1/-1;background:#fff;border:1px solid #d6d6d2;padding:14px 16px}
+.opt-head .fit b{display:block;margin-bottom:2px}
+.cap{font-size:13px;color:#55554f;margin:28px 0 8px}
+.screen{background:#fff;border:1px solid #c9c9c4;overflow:hidden;position:relative}
+@media (max-width:820px){.opt-head{grid-template-columns:1fr}.cmp{display:block;overflow-x:auto}}
+
+/* ---------- shared skeleton ---------- */
+.ic{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ic.f{fill:currentColor;stroke:none}
+.app{display:grid;min-height:640px}
+.main{padding:24px 30px 30px;min-width:0}
+.banner{display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:12.5px;padding:7px 28px}
+.banner .sp,.top .sp{flex:1}
+.banner a{color:inherit}
+.top{display:flex;align-items:flex-end;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+.num{font-variant-numeric:tabular-nums}
+table.log{width:100%;border-collapse:collapse;font-size:14px}
+table.log th{text-align:left;padding:8px 10px}
+table.log td{padding:10px;vertical-align:middle}
+.who{display:flex;flex-direction:column;line-height:1.25}
+.who small{font-size:13px}
+small{font-size:13px}
+.who{white-space:nowrap}
+.bar{max-width:100%}
+table.log td,table.log th{padding-left:8px;padding-right:8px}
+button{font:inherit;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:3px solid #2b6cff;outline-offset:2px}
+
+.phone{width:296px;aspect-ratio:9/19.5;border-radius:46px;padding:10px;position:relative;flex:none}
+.phone .scr{position:absolute;inset:10px;border-radius:37px;overflow:hidden;display:flex;flex-direction:column;background:#fff;color:#111}
+.phone .island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:92px;height:27px;border-radius:20px;background:#000;z-index:2}
+.phone .status{height:46px;display:flex;align-items:center;justify-content:space-between;padding:4px 26px 0 30px;font:600 14px/1 -apple-system,"SF Pro Text",system-ui,sans-serif}
+.phone .mhead{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 0 10px;font:500 12px/1.2 -apple-system,system-ui,sans-serif;position:relative;border-bottom:1px solid #e3e3e6}
+.phone .mhead .av{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font:600 17px/1 -apple-system,system-ui,sans-serif}
+.phone .mhead .back{position:absolute;left:16px;top:16px;color:#2b7fff}
+.phone .thread{flex:1;padding:8px 12px;display:flex;flex-direction:column;gap:6px;font:15px/1.3 -apple-system,"SF Pro Text",system-ui,sans-serif}
+.phone .when{text-align:center;font-size:12px;margin:6px 0 4px;color:#6b6b70}
+.phone .bub{max-width:78%;padding:8px 12px;border-radius:18px;border-bottom-left-radius:5px;align-self:flex-start;background:#e9e9eb}
+.phone .compose{margin:8px 12px 26px;border:1px solid #d1d1d6;border-radius:18px;padding:7px 12px;font:14px/1.2 -apple-system,system-ui,sans-serif;color:#6b6b70}
+.phone .home{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:110px;height:4px;border-radius:3px;background:#111}
+.phone .sd{position:absolute;width:3px;border-radius:2px}
+.surv{display:grid;grid-template-columns:1fr 360px}
+.surv .side{display:flex;flex-direction:column;align-items:center;gap:14px;padding:26px 16px}
+.drawer{position:absolute;right:0;top:0;bottom:0;width:410px;max-width:100%;padding:24px 26px;background:#fff;overflow:hidden}
+.screen.team .main{padding-right:430px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;padding:28px 40px 44px;align-items:center}
+.hero .toprow{display:flex;align-items:center;justify-content:space-between;grid-column:1/-1;margin-bottom:18px}
+@media (max-width:900px){
+  .app{grid-template-columns:1fr!important;min-height:0}
+  .main{padding:16px}.screen.team .main{padding-right:16px}
+  .drawer{position:static;width:auto}.scrim{display:none}
+  .surv{grid-template-columns:1fr}
+  .hero{grid-template-columns:1fr;padding:20px 16px 32px}
+  table.stack thead{display:none}
+  table.stack,table.stack tbody,table.stack tr,table.stack td{display:block;width:100%}
+  table.stack tr{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:12px 2px}
+  table.stack td{padding:0}table.stack td.hide-s{display:none}
+}
+
+/* =====================================================================
+   OPTION C · ROUTE LINE   (Atkinson Hyperlegible Next, plum, signage)
+   ===================================================================== */
+.C{--ink:#1c1824;--muted:#5a5368;--rule:#d8d3df;--shell:#f4f1f7;--accent:#5c2d91;--deep:#41206b;--tint:#ece2f6;--mid:#c3aedd;
+  font-family:"Atkinson Hyperlegible Next",system-ui,sans-serif;color:var(--ink)}
+.C .banner{background:var(--ink);color:#fff}
+.C .app{grid-template-columns:230px 1fr}
+.C .nav{padding:24px 18px 20px 22px;display:flex;flex-direction:column;border-right:1px solid var(--rule);background:var(--shell)}
+.C .brand{display:flex;align-items:center;gap:10px;margin-bottom:26px}
+.C .wm{font-weight:800;font-size:16px;line-height:1.1;letter-spacing:-.005em}
+.C .wm small{display:block;font-weight:500;font-size:12.5px;color:var(--muted);letter-spacing:0;margin-top:2px}
+.C .navl{position:relative;display:flex;flex-direction:column}
+.C .navl::before{content:"";position:absolute;left:9px;top:16px;bottom:16px;width:5px;background:var(--ink)}
+.C .navl a,.C .nav .help{position:relative;display:block;padding:9px 6px 9px 38px;text-decoration:none;color:var(--ink);font-weight:600;font-size:15px}
+.C .navl a::before{content:"";position:absolute;left:3px;top:50%;width:17px;height:17px;margin-top:-8.5px;border-radius:50%;background:#fff;border:4px solid var(--ink)}
+.C .navl a[aria-current]{font-weight:800;color:var(--accent)}
+.C .navl a[aria-current]::before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 3px var(--shell),0 0 0 5px var(--accent)}
+.C .nav .help{margin-top:auto;padding-left:6px;font-weight:500;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.C h3{font-weight:800;font-size:30px;line-height:1.1;letter-spacing:-.015em}
+.C .sub{color:var(--muted);font-size:14px;margin-top:3px}
+.C .btn{font-weight:700;padding:9px 16px 7px;background:none;border:0;border-bottom:4px solid var(--ink);color:var(--ink);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.C .btn:hover{background:var(--shell)}
+.C .btn.pri{background:var(--accent);color:#fff;border-bottom-color:var(--deep)}
+.C .btn.pri:hover{background:var(--deep)}
+.C .figs{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.C .fig{border-top:6px solid var(--ink);padding-top:8px}
+.C .fig .k{font-size:14px;font-weight:600;color:var(--muted)}
+.C .fig .v{font-size:48px;font-weight:800;line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.C .fig .n{font-size:13px;color:var(--muted)}
+.C .fig.flag{border-top-color:var(--accent)}.C .fig.flag .v{color:var(--accent)}
+.C .fig a{color:var(--accent);font-weight:700}
+.C .panel{margin-top:30px}
+.C .panel>b{display:block;font-size:17px;font-weight:800;margin-bottom:2px}
+.C .panel .sub{margin:0 0 8px}
+.C svg.flow{width:100%;height:auto;display:block;font-family:inherit}
+.C .hrs{display:flex;align-items:flex-end;gap:10px;height:150px;margin-top:14px;border-bottom:6px solid var(--ink)}
+.C .hrs div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;font-weight:800;text-align:center;font-size:14px;font-variant-numeric:tabular-nums}
+.C .hrs i{display:block;background:var(--mid);margin-top:3px}
+.C .hrs div.max i{background:var(--accent)}
+.C .hl{display:flex;gap:10px;margin-top:6px;font-size:13px;color:var(--muted)}
+.C .hl span{flex:1;text-align:center}
+.C table.log th{font-weight:700;font-size:13px;color:var(--muted);border-bottom:2px solid var(--ink)}
+.C table.log td{border-bottom:1px solid var(--rule)}
+.C table.log tr.sel td{background:var(--tint)}
+.C .bar{display:flex;height:10px;width:110px;background:var(--shell)}
+.C .bar i.c{background:var(--ink)}.C .bar i.o{background:var(--mid)}
+.C .rate{font-weight:800;font-size:18px;font-variant-numeric:tabular-nums}.C .rate.low{color:var(--accent)}
+.C .t{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:13.5px}
+.C .t.review{background:var(--accent);color:#fff;border-radius:6px;padding:2px 9px}
+.C .t.cleared{border:2px solid var(--ink);border-radius:6px;padding:2px 9px}
+.C .t.ok{color:var(--muted)}
+.C .t .ic{width:14px;height:14px}
+.C .scrim{position:absolute;inset:0;background:rgba(28,24,36,.18)}
+.C .drawer{border-left:6px solid var(--accent)}
+.C .drawer h3{font-size:25px}
+.C dl.kv{display:grid;grid-template-columns:110px 1fr;gap:8px 12px;margin:18px 0;font-size:14.5px}
+.C dl.kv dt{color:var(--muted)}.C dl.kv dd{font-weight:700}
+.C .why{margin:16px 0;padding:12px 14px;background:var(--tint);font-size:14px;max-width:46ch}
+.C .drawer footer{display:flex;gap:14px;margin-top:20px}
+.C .tl{position:relative;height:30px;margin:10px 0 6px}
+.C .tl::before{content:"";position:absolute;left:0;right:0;top:11px;height:8px;background:var(--shell)}
+.C .tl i{position:absolute;top:7px;height:16px}
+.C .tl i.c{background:var(--ink)}.C .tl i.o{background:var(--mid)}
+.C .key{font-size:12.5px;color:var(--muted)}.C .key i{display:inline-block;width:12px;height:12px;vertical-align:-1px;margin-right:4px}
+.C .rules{display:grid;grid-template-columns:1fr auto;gap:12px 26px;align-items:end;margin-bottom:22px}
+.C .rules .edit{font-size:13px;color:var(--muted);text-align:right}
+.C .rt{display:grid;grid-template-columns:repeat(4,1fr);position:relative;text-align:left;font-size:13.5px}
+.C .rt>div{padding:0 10px 0 0;position:relative}
+.C .rt svg{display:block;width:100%;height:22px;margin-bottom:6px}
+.C .rt b{display:block;font-weight:800;font-size:14px}
+.C .rt span{color:var(--muted);display:block;line-height:1.3}
+.C svg.mini{width:132px;height:20px;display:block}
+.C .out{font-size:13.5px;font-weight:600}
+.C .out.sent{color:var(--accent)}
+.C .notsent{background:var(--ink);color:#fff;font-weight:700;font-size:13px;padding:3px 10px}
+.C .phone{background:#1c1824}
+.C .phone .av{background:var(--accent);color:#fff}
+.C .phone .home{background:#1c1824}
+.C .hero{background:var(--shell)}
+.C .hero h1{font-weight:800;font-size:52px;line-height:1.03;letter-spacing:-.025em;max-width:15ch}
+.C .hero p{margin-top:18px;font-size:18px;max-width:46ch}
+.C .hero .cta{margin-top:26px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.C .hero .cta .fine{font-size:13.5px;color:var(--muted);max-width:30ch}
+.C .slip{background:#fff;border-top:6px solid var(--ink);padding:16px 18px 6px}
+.C .slip .r{padding:10px 0;border-bottom:1px solid var(--rule)}
+.C .slip .r:last-of-type{border-bottom:0}
+.C .slip .r .l{display:flex;justify-content:space-between;gap:10px;font-size:14px;margin-bottom:4px;font-weight:600}
+.C .slip .r .l span:last-child{font-weight:500;color:var(--muted)}
+.C .slip svg.mini{width:100%;height:20px}
+.C .slip-note{margin-top:10px;font-size:13.5px;color:var(--muted)}
+@media (max-width:900px){.C .nav{flex-direction:row;overflow-x:auto;padding:10px 12px;gap:6px;align-items:center;border-right:0;border-bottom:1px solid var(--rule)}.C .brand{margin:0}.C .wm{display:none}.C .navl{flex-direction:row}.C .navl::before,.C .navl a::before{display:none}.C .navl a,.C .nav .help{padding:6px 8px;white-space:nowrap}.C .nav .help{margin:0}.C .figs{grid-template-columns:1fr 1fr}.C .hero h1{font-size:38px}.C .rt{grid-template-columns:1fr 1fr;gap:14px}}
+
+/* =====================================================================
+   OPTION D · MARKED-UP REPORT   (Bitter + Source Sans 3, highlighter yellow)
+   ===================================================================== */
+.D{--ink:#17181b;--muted:#585a61;--rule:#c9cacd;--band:#f2f2ef;--hl:#ffe14d;--hl-soft:#fff3b3;
+  font-family:"Source Sans 3",system-ui,sans-serif;font-size:16px;color:var(--ink)}
+.D .banner{background:var(--hl);color:var(--ink);border-bottom:1.5px solid var(--ink);font-weight:600}
+.D .app{grid-template-columns:38px 210px 1fr}
+.D .rail{background:var(--band);border-right:1.5px dashed #aaa;background-image:radial-gradient(circle at 50% 50%,#d9d9d4 0 5.5px,#aaa 5.5px 6.5px,transparent 7px);background-size:38px 40px;background-position:0 14px;background-repeat:repeat-y}
+.D .nav{padding:24px 16px 20px;display:flex;flex-direction:column;gap:2px;border-right:1px solid var(--rule)}
+.D .brand{display:flex;align-items:center;gap:10px;margin-bottom:24px}
+.D .wm{font-family:Bitter,serif;font-weight:800;font-size:16px;line-height:1.15}
+.D .wm small{display:block;font-family:"Source Sans 3",sans-serif;font-weight:500;font-size:13px;color:var(--muted);margin-top:2px}
+.D .nav a{display:flex;gap:10px;align-items:center;padding:8px 8px;text-decoration:none;color:var(--ink);font-weight:600}
+.D .nav a[aria-current]{background:linear-gradient(transparent 38%,var(--hl) 38% 92%,transparent 92%);font-weight:700}
+.D .nav .help{margin-top:auto;font-weight:500;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
+.D h3{font-family:Bitter,serif;font-weight:800;font-size:30px;line-height:1.1}
+.D .sub{color:var(--muted);font-size:15px;margin-top:3px}
+.D .btn{font-weight:600;padding:8px 14px;background:#fff;border:1.5px solid var(--ink);color:var(--ink);text-decoration:none;display:inline-flex;gap:8px;align-items:center;border-radius:0}
+.D .btn:hover{background:var(--ink);color:#fff}
+.D .btn.pri{background:var(--hl);font-weight:700}.D .btn.pri:hover{background:var(--ink);color:var(--hl)}
+.D .sheet{display:grid;grid-template-columns:1fr 1fr;gap:36px 44px}
+.D .sheet h4{font-family:Bitter,serif;font-weight:700;font-size:18px;margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid var(--ink)}
+.D .lead{display:flex;align-items:baseline;gap:8px;padding:5px 0;font-size:16.5px}
+.D .lead .d{flex:1;border-bottom:2px dotted #8a8c92;transform:translateY(-4px)}
+.D .lead .n{font-weight:700;font-variant-numeric:tabular-nums}
+.D .lead.sub2{padding-left:18px;color:var(--muted);font-size:15.5px}
+.D .lead.tot{border-top:2px solid var(--ink);margin-top:6px;padding-top:9px;font-weight:700;font-size:19px}
+.D .lead.tot .n{font-family:Bitter,serif;font-size:26px;border-bottom:4px double var(--ink)}
+.D .mk{color:var(--ink);background:linear-gradient(transparent 12%,var(--hl) 12% 94%,transparent 94%);padding:0 5px;margin:0 -5px}
+.D .who .mk{align-self:flex-start}
+.D .lead.flagrow{margin-top:18px}
+.D .lead a{color:var(--ink);font-weight:600}
+.D .hr{display:grid;grid-template-columns:48px 1fr 40px;align-items:center;gap:10px;padding:3px 0;font-variant-numeric:tabular-nums;font-size:14.5px}
+.D .hr i{display:block;height:11px;background:var(--ink)}
+.D .hr b{text-align:right}
+table.log.dd th{font-weight:700;font-size:14px;border-bottom:2px solid var(--ink);padding:8px 10px}
+.D table.log td{border-bottom:1px solid var(--rule)}
+.D table.log tbody tr:nth-child(even){background:var(--band)}
+.D table.log tbody tr.rv,.D table.log tbody tr.rv:nth-child(even){background:var(--hl-soft)}
+.D table.log tr.sel td:first-child{box-shadow:inset 5px 0 0 var(--ink)}
+.D .bar{display:flex;height:11px;width:110px;border:1px solid var(--ink);background:#fff}
+.D .bar i.c{background:var(--ink)}
+.D .bar i.o{background:repeating-linear-gradient(135deg,var(--ink) 0 1.5px,#fff 1.5px 4px)}
+.D .rate{font-family:Bitter,serif;font-weight:800;font-size:19px;font-variant-numeric:tabular-nums}
+.D .rate.low{background:linear-gradient(transparent 14%,var(--hl) 14% 94%,transparent 94%);padding:0 5px}
+.D .t{font-weight:600;font-size:14.5px;display:inline-flex;gap:6px;align-items:center}
+.D .t.cleared{text-decoration:line-through;text-decoration-thickness:1.5px;color:var(--muted);font-weight:500}
+.D .t.review{font-weight:700}
+.D .t.skip{color:var(--muted);font-weight:500}
+.D .scrim{position:absolute;inset:0;background:rgba(23,24,27,.18)}
+.D .drawer{border-left:1.5px solid var(--ink);padding-top:0}
+.D .drawer header{margin:0 -26px 18px;padding:22px 26px 14px;background:var(--band);border-bottom:2px solid var(--ink)}
+.D .drawer h3{font-size:25px}
+.D dl.kv{display:grid;grid-template-columns:120px 1fr;gap:6px 12px;font-size:15.5px}
+.D dl.kv dt{color:var(--muted)}.D dl.kv dd{font-weight:700}
+.D .why{margin:16px 0;padding:10px 0 10px 14px;border-left:4px solid var(--hl);font-size:15px;max-width:46ch}
+.D .drawer footer{display:flex;gap:12px;margin-top:20px}
+.D .tl{position:relative;height:30px;margin:10px 0 6px;border:1px solid var(--ink)}
+.D .tl i{position:absolute;top:0;bottom:0}
+.D .tl i.c{background:var(--ink)}
+.D .tl i.o{background:repeating-linear-gradient(135deg,var(--ink) 0 1.5px,#fff 1.5px 4px)}
+.D .key{font-size:13.5px;color:var(--muted)}.D .key i{display:inline-block;width:14px;height:10px;vertical-align:0;margin-right:4px;border:1px solid var(--ink)}
+.D .rules{margin-bottom:22px;max-width:70ch;display:grid;gap:4px}
+.D .rules p{font-size:16.5px}.D .rules .edit{font-size:14px;color:var(--muted)}
+.D .out.sent{font-weight:700}
+.D .out.skip{color:var(--muted)}
+.D .notsent{background:var(--ink);color:var(--hl);font-weight:700;font-size:13.5px;padding:3px 10px}
+.D .phone{background:#17181b}
+.D .phone .av{background:var(--hl);color:#17181b}
+.D .hero{background:#fff}
+.D .hero h1{font-family:Bitter,serif;font-weight:800;font-size:46px;line-height:1.1;letter-spacing:-.01em;max-width:18ch}
+.D .hero p{margin-top:18px;font-size:19px;max-width:46ch;line-height:1.45}
+.D .hero .cta{margin-top:26px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.D .hero .cta .fine{font-size:14.5px;color:var(--muted);max-width:30ch}
+.D .paper{background:#fff;border:1.5px solid var(--ink);position:relative;padding:22px 22px 16px 46px;box-shadow:0 1px 0 var(--rule),0 8px 0 -4px #fff,0 9px 0 -3px var(--ink)}
+.D .paper::before{content:"";position:absolute;left:0;top:0;bottom:0;width:30px;border-right:1.5px dashed #aaa;background:var(--band);background-image:radial-gradient(circle at 50% 50%,#d9d9d4 0 4.5px,#aaa 4.5px 5.5px,transparent 6px);background-size:30px 34px;background-position:0 10px}
+.D .paper .lead{font-size:15px}
+.D .paper .lead.skip{color:var(--muted)}
+.D .paper h4{font-family:Bitter,serif;font-size:16px;margin-bottom:6px}
+@media (max-width:900px){.D .rail{display:none}.D .nav{flex-direction:row;overflow-x:auto;padding:10px 12px;gap:4px;align-items:center;border-right:0;border-bottom:1px solid var(--rule)}.D .brand{margin:0}.D .wm{display:none}.D .nav a{white-space:nowrap}.D .nav .help{margin:0}.D .sheet{grid-template-columns:1fr}.D .hero h1{font-size:34px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-over" viewBox="0 0 24 24"><path d="M4 4h7v7H4zM13 4h7v4h-7zM13 11h7v9h-7zM4 14h7v6H4z"/></symbol>
+  <symbol id="i-team" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M16 5.5a3 3 0 010 5.5M18 14.2c1.9.7 3 2.5 3 5.3"/></symbol>
+  <symbol id="i-surv" viewBox="0 0 24 24"><path d="M4 5h16v11H10l-5 4v-4H4z"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-diamond" viewBox="0 0 24 24"><path d="M12 3l9 9-9 9-9-9z"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 24 24"><path d="M12 4v11m-5-5l5 5 5-5M5 20h14"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol>
+  <symbol id="i-back" viewBox="0 0 11 18"><path d="M9 1L2 9l7 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="page">
+  <section class="intro">
+    <h1>Team Performance: two more looks to pick from</h1>
+    <p class="line"><b>The app:</b> one screen where the owner or supervisor of a small call center (under 50 people) sees every call credited to the right person and every customer text the rules sent or held back. <b>The feeling:</b> clear and dense without being cold, and fair to the team.</p>
+    <p class="how">A second round after A (Harbor chart) and B (Box score) were passed on. Same sample day at Coral Line Support, same four screens: Overview, Team with Lucia's drawer open, Surveys with the drawn phone, and the landing page's first screen. Both use the <b>B · Tally</b> logo, redrawn in each look's colors. Pick one, or tell me what to change.</p>
+    <div class="jump"><a href="#c">C · Route line</a><a href="#d">D · Marked-up report</a></div>
+
+    <table class="cmp">
+      <thead><tr><th></th><th>Ground</th><th>Accent</th><th>Display font</th><th>Body font</th><th>Shape</th></tr></thead>
+      <tbody>
+        <tr><th>C · Route line</th><td><span class="sw" style="background:#f4f1f7"></span>White work area, pale lilac-grey side bar <code>#f4f1f7</code></td><td><span class="sw" style="background:#5c2d91"></span>Plum <code>#5c2d91</code></td><td>Atkinson Hyperlegible Next, 800</td><td>Atkinson Hyperlegible Next</td><td>Signage: no cards or shadows, thick 6px lines, round stops, flat plate buttons with a thick bottom bar, rounded-square Review tag</td></tr>
+        <tr><th>D · Marked-up report</th><td><span class="sw" style="background:#fff"></span>Pure white paper, grey-white bands <code>#f2f2ef</code></td><td><span class="sw" style="background:#ffe14d"></span>Highlighter yellow <code>#ffe14d</code>, used only as a marker</td><td>Bitter, slab serif 800</td><td>Source Sans 3</td><td>Printout: square corners, dotted leaders, hatched fills instead of tints, a punched tractor-feed edge, yellow swipes on what a person should look at</td></tr>
+        <tr><th>Closest shipped row</th><td colspan="5"><b>C</b> is closest to <b>no-show-rescue</b> (cool ground, square, no shadows). It differs in Accent (plum, not teal), both fonts, Ground (lilac-grey bar, not off-white) and Shape (thick route lines and plate buttons, not 1.5px outlines). <b>D</b> is closest to <b>quote-to-paid</b> (square, ruled lists, no shadows). It differs in Accent (yellow, not teal), both fonts, Ground (pure white, not warm off-white) and Shape (hatching, dotted leaders and marker swipes, not hairline ledger rules). Neither uses pill buttons with soft cards or Bricolage Grotesque, and neither repeats A (magenta, Archivo) or B (coral, Big Shoulders).</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ==================================================== C -->
+  <section class="C" id="c">
+    <div class="opt-head">
+      <div>
+        <h2>C · Route line</h2>
+        <p class="tag">From the signs in a train station: one thick line, round stops, and a plain place where each trip ends.</p>
+      </div>
+      <p>The signature: a call is drawn as a trip along one line with three stops (the extension is mapped, the call ran 2 minutes or longer, the customer was not asked in 24 hours). A text is sent only if the trip reaches the end. Every skipped text ends at the stop that held it, so "which rule stopped it" is something you see, not something you read. The side menu is the same line with a stop for each screen.</p>
+      <div class="fit"><b>Why it fits</b>The supervisor's two questions are "who got credit?" and "why did this survey not go?". The route answers the second at a glance and keeps the numbers plain and dark on white. Plum is calm and is not the alarm colour red, so a Review tag reads as a question. Atkinson Hyperlegible was drawn so every letter and digit is hard to confuse, which a dense table of extensions and times needs.</div>
+    </div>
+
+    <p class="cap">1 · Overview</p>
+    <div class="screen">
+      <div class="banner"><span>Sample data. No text goes out and no CRM is reached.</span><span class="sp"></span><a href="#c">Reset demo</a><a href="#c">Back to the overview page</a><span>Built by TEKGUYZ</span></div>
+      <div class="app">
+        <nav class="nav" aria-label="Demo">
+          <div class="brand"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M9 8v16M13.5 8v16M18 8v16M22.5 8v16" stroke="#1c1824" stroke-width="2.4" fill="none"/><path d="M6 21 26 11" stroke="#5c2d91" stroke-width="2.8" fill="none"/></svg><div class="wm">Team Performance<small>Coral Line Support</small></div></div>
+          <div class="navl"><a href="#c" aria-current="page">Overview</a><a href="#c">Team</a><a href="#c">Surveys</a><a href="#c">Extensions</a></div>
+          <a class="help" href="#c">How it works</a>
+        </nav>
+        <div class="main">
+          <div class="top"><div><h3>Overview</h3><p class="sub">Tuesday, November 17 · 8 AM to 6 PM · 14 people</p></div><span class="sp"></span><a class="btn" href="#c">Open surveys</a></div>
+          <div class="figs">
+            <div class="fig"><div class="k">Calls processed</div><div class="v">182</div><div class="n">All credited to a person but 3</div></div>
+            <div class="fig"><div class="k">Texts sent</div><div class="v">104</div><div class="n">One rating text each</div></div>
+            <div class="fig"><div class="k">Screened out</div><div class="v">75</div><div class="n">54 under 2 min · 21 asked today</div></div>
+            <div class="fig flag"><div class="k">Open review flags</div><div class="v">2</div><div class="n"><a href="#c">See who on Team</a></div></div>
+          </div>
+          <div class="panel">
+            <b>Where today's 182 calls ended up</b>
+            <p class="sub">The line is as thick as the number of calls still on it.</p>
+            <svg class="flow" viewBox="0 0 800 250" role="img" aria-label="182 calls came in. 3 had no mapped extension, 54 were under 2 minutes, 21 were already asked today. 104 texts were sent.">
+              <g font-weight="700" font-size="14" fill="#1c1824" text-anchor="middle">
+                <text x="50" y="34">Call comes in</text><text x="200" y="34">Extension mapped</text><text x="380" y="34">2 minutes or longer</text><text x="560" y="34">Not asked in 24 hours</text><text x="740" y="34">Text sent</text>
+              </g>
+              <g fill="none">
+                <path d="M50 100H200" stroke="#1c1824" stroke-width="26"/>
+                <path d="M200 100H380" stroke="#1c1824" stroke-width="25.6"/>
+                <path d="M380 100H560" stroke="#1c1824" stroke-width="17.9"/>
+                <path d="M560 100H740" stroke="#5c2d91" stroke-width="14.9"/>
+                <path d="M200 116V170M380 112V170M560 109V170" stroke="#9c92ad" stroke-width="5" stroke-dasharray="4 4"/>
+                <path d="M190 172h20M370 172h20M550 172h20" stroke="#1c1824" stroke-width="5"/>
+              </g>
+              <g fill="#fff" stroke="#1c1824" stroke-width="6"><circle cx="50" cy="100" r="13"/><circle cx="200" cy="100" r="11"/><circle cx="380" cy="100" r="11"/><circle cx="560" cy="100" r="11"/></g>
+              <circle cx="740" cy="100" r="15" fill="#5c2d91" stroke="#fff" stroke-width="3"/>
+              <g font-weight="800" font-size="28" fill="#1c1824" text-anchor="middle" style="font-variant-numeric:tabular-nums"><text x="125" y="72" font-size="22">182</text><text x="290" y="72" font-size="22">179</text><text x="470" y="74" font-size="22">125</text><text x="650" y="74" font-size="22" fill="#5c2d91">104</text><text x="200" y="208">3</text><text x="380" y="208">54</text><text x="560" y="208">21</text></g>
+              <g font-size="13" fill="#5a5368" text-anchor="middle"><text x="200" y="228">No match</text><text x="380" y="228">Under 2 minutes</text><text x="560" y="228">Asked today</text><text x="740" y="130" fill="#5c2d91" font-weight="700">Texts sent</text></g>
+            </svg>
+          </div>
+          <div class="panel" style="margin-top:22px">
+            <b>Calls by hour</b>
+            <div class="hrs" role="img" aria-label="Calls by hour, 8 AM to 5 PM: 11, 19, 24, 22, 17, 15, 21, 23, 18, 12" id="c-hrs"></div>
+            <div class="hl"><span>8a</span><span>9a</span><span>10a</span><span>11a</span><span>12p</span><span>1p</span><span>2p</span><span>3p</span><span>4p</span><span>5p</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="cap">2 · Team, with Lucia's row flagged for Review and her drawer open</p>
+    <div class="screen team">
+      <div class="app">
+        <nav class="nav" aria-label="Demo">
+          <div class="brand"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M9 8v16M13.5 8v16M18 8v16M22.5 8v16" stroke="#1c1824" stroke-width="2.4" fill="none"/><path d="M6 21 26 11" stroke="#5c2d91" stroke-width="2.8" fill="none"/></svg><div class="wm">Team Performance<small>Coral Line Support</small></div></div>
+          <div class="navl"><a href="#c">Overview</a><a href="#c" aria-current="page">Team</a><a href="#c">Surveys</a><a href="#c">Extensions</a></div>
+          <a class="help" href="#c">How it works</a>
+        </nav>
+        <div class="main">
+          <div class="top"><div><h3>Team</h3><p class="sub">Credit for calls and offline work, by extension</p></div></div>
+          <table class="log stack"><thead><tr><th>Ext</th><th>Person</th><th>Credited time</th><th>Updates</th><th>Focus</th><th>Status</th></tr></thead><tbody id="c-team"></tbody></table>
+        </div>
+      </div>
+      <div class="scrim"></div>
+      <aside class="drawer" aria-label="Lucia Moreno">
+        <h3>Lucia Moreno</h3><p class="sub">Ext 105 · CRM-1046 · <span class="t review"><svg class="ic f"><use href="#i-diamond"/></svg>Review</span></p>
+        <dl class="kv"><dt>Calls</dt><dd class="num">14 calls · 1h 48m</dd><dt>Offline work</dt><dd class="num">3h 10m · 2 blocks</dd><dt>Updates logged</dt><dd class="num">49</dd><dt>Focus rating</dt><dd><span class="rate low">26</span></dd></dl>
+        <b style="font-size:15px">Her day, 8 AM to 6 PM</b>
+        <div class="tl" aria-hidden="true" id="c-tl"></div>
+        <span class="key"><i style="background:#1c1824"></i>Calls &nbsp; <i style="background:#c3aedd"></i>Case review 9:40–11:10, paperwork 2:15–3:55</span>
+        <p class="why">49 updates across 190 offline minutes gives a focus rating of 26. Under 40 asks for a look, not a verdict: long case reviews often log few updates.</p>
+        <footer><button class="btn pri"><svg class="ic"><use href="#i-check"/></svg>Clear flag</button><button class="btn">Close</button></footer>
+      </aside>
+    </div>
+
+    <p class="cap">3 · Surveys, with a Sent row open on the phone</p>
+    <div class="screen">
+      <div class="surv">
+        <div class="main">
+          <div class="top"><div><h3>Surveys</h3><p class="sub">Every call, newest first, and where its trip ended</p></div><span class="sp"></span><button class="btn"><svg class="ic"><use href="#i-dl"/></svg>Export CSV</button><button class="btn pri"><svg class="ic f" style="width:13px;height:13px"><use href="#i-play"/></svg>Run sample batch</button></div>
+          <div class="rules">
+            <div class="rt" id="c-rt"></div>
+            <div class="edit">Edit rules: not available in the demo</div>
+          </div>
+          <table class="log stack"><thead><tr><th>Time</th><th>Person</th><th>Length</th><th>Customer</th><th>Trip</th><th>Outcome</th></tr></thead><tbody id="c-surv"></tbody></table>
+        </div>
+        <div class="side">
+          <span class="notsent">Not sent: demo</span>
+          <div class="phone" aria-label="The text Lucia's customer would get">
+            <i class="sd" style="left:-3px;top:110px;height:28px;background:#1c1824"></i><i class="sd" style="left:-3px;top:156px;height:52px;background:#1c1824"></i><i class="sd" style="right:-3px;top:170px;height:72px;background:#1c1824"></i>
+            <div class="scr">
+              <div class="island"></div>
+              <div class="status"><span>2:41</span><span style="display:flex;gap:5px;align-items:center"><svg width="18" height="12" viewBox="0 0 18 12"><path d="M1 11V8M6 11V5.5M11 11V3M16 11V1" stroke="#111" stroke-width="2.6" stroke-linecap="round"/></svg><svg width="27" height="12" viewBox="0 0 27 12"><rect x=".5" y=".5" width="23" height="11" rx="3.2" fill="none" stroke="#111" opacity=".5"/><rect x="2" y="2" width="17" height="8" rx="2" fill="#111"/><path d="M25 4v4" stroke="#111" stroke-width="1.6" opacity=".5"/></svg></span></div>
+              <div class="mhead"><svg class="ic back" width="11" height="18"><use href="#i-back"/></svg><span class="av">CL</span><span>Coral Line Support</span></div>
+              <div class="thread"><div class="when">Text Message · Today 2:41 PM</div><div class="bub">Hi, thanks for speaking with Lucia at Coral Line Support. How did we do? Reply 1 to 5.</div></div>
+              <div class="compose">Text Message</div>
+              <span class="home"></span>
+            </div>
+          </div>
+          <p class="sub" style="text-align:center;max-width:30ch">Sent because the call ran 4:12 and this number had no text in the last 24 hours.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="cap">4 · Landing page, first screen</p>
+    <div class="screen">
+      <div class="hero">
+        <div class="toprow"><div class="brand" style="margin:0"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path d="M9 8v16M13.5 8v16M18 8v16M22.5 8v16" stroke="#1c1824" stroke-width="2.4" fill="none"/><path d="M6 21 26 11" stroke="#5c2d91" stroke-width="2.8" fill="none"/></svg><div class="wm">Team Performance</div></div><a class="btn" href="#c">Try the demo</a></div>
+        <div>
+          <h1>Phone logs that credit the right person, and surveys that know when to stop.</h1>
+          <p>For call centers and service teams under 50 people that take calls all day. Every desk-phone call lands on the right person's record. Customers get one rating text, only when asking is worth it.</p>
+          <div class="cta"><a class="btn pri" href="#c">Try the demo</a><span class="fine">No sign-up. Sample data. Texts and the CRM are simulated.</span></div>
+        </div>
+        <div>
+          <div class="slip" id="c-slip"></div>
+          <p class="slip-note">A flag is a question for a person, never a verdict.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================================================== D -->
+  <section class="D" id="d">
+    <div class="opt-head">
+      <div>
+        <h2>D · Marked-up report</h2>
+        <p class="tag">From a printed report on a supervisor's desk: ruled lines, totals that add up, and a highlighter for what needs a person.</p>
+      </div>
+      <p>The signature: yellow is a marker, never an alarm. It is used in two places only: a Review row, and the one cell that explains a skipped text (the short length, the customer already asked, the unmapped extension). The Overview totals are written as plain subtraction with dotted leaders, 182 minus 3, 54 and 21 leaves 104, so the numbers can be checked by eye. Offline work is hatched instead of tinted, like a printout.</p>
+      <div class="fit"><b>Why it fits</b>The supervisor has to trust the numbers and show them to clients, so the page reads like a document you can sign: arithmetic that adds up, black type on white, nothing glowing. Yellow marks a question for a person, so a flag feels like a note in the margin, never a red verdict on someone's work. Bitter is a sturdy, friendly slab; Source Sans 3 is quiet and clear in dense columns.</div>
+    </div>
+
+    <p class="cap">1 · Overview</p>
+    <div class="screen">
+      <div class="banner"><span>Sample data. No text goes out and no CRM is reached.</span><span class="sp"></span><a href="#d">Reset demo</a><a href="#d">Back to the overview page</a><span>Built by TEKGUYZ</span></div>
+      <div class="app">
+        <div class="rail" aria-hidden="true"></div>
+        <nav class="nav" aria-label="Demo">
+          <div class="brand"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="13" width="24" height="9" fill="#ffe14d"/><path d="M9 8v16M13.5 8v16M18 8v16M22.5 8v16" stroke="#17181b" stroke-width="2.4" fill="none"/><path d="M6 21 26 11" stroke="#17181b" stroke-width="2.8" fill="none"/></svg><div class="wm">Team Performance<small>Coral Line Support</small></div></div>
+          <a href="#d" aria-current="page"><svg class="ic"><use href="#i-over"/></svg>Overview</a>
+          <a href="#d"><svg class="ic"><use href="#i-team"/></svg>Team</a>
+          <a href="#d"><svg class="ic"><use href="#i-surv"/></svg>Surveys</a>
+          <a href="#d"><svg class="ic"><use href="#i-ext"/></svg>Extensions</a>
+          <a class="help" href="#d">How it works</a>
+        </nav>
+        <div class="main">
+          <div class="top"><div><h3>Overview</h3><p class="sub">Tuesday, November 17 · 8 AM to 6 PM · 14 people</p></div><span class="sp"></span><a class="btn" href="#d">Open surveys</a></div>
+          <div class="sheet">
+            <div>
+              <h4>Today's totals</h4>
+              <div class="lead"><span>Calls processed</span><span class="d"></span><span class="n">182</span></div>
+              <div class="lead sub2"><span>No match: extension not mapped</span><span class="d"></span><span class="n">−3</span></div>
+              <div class="lead sub2"><span>Skipped: under 2 minutes</span><span class="d"></span><span class="n">−54</span></div>
+              <div class="lead sub2"><span>Skipped: already asked today</span><span class="d"></span><span class="n">−21</span></div>
+              <div class="lead tot"><span>Texts sent</span><span class="d"></span><span class="n">104</span></div>
+              <div class="lead flagrow"><span><span class="mk">Open review flags</span></span><span class="d"></span><span class="n">2</span></div>
+              <div class="lead sub2"><a href="#d">See who on Team</a></div>
+            </div>
+            <div>
+              <h4>Calls by hour</h4>
+              <div id="d-hrs" role="img" aria-label="Calls by hour, 8 AM to 5 PM: 11, 19, 24, 22, 17, 15, 21, 23, 18, 12"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="cap">2 · Team, with Lucia's row flagged for Review and her drawer open</p>
+    <div class="screen team">
+      <div class="app">
+        <div class="rail" aria-hidden="true"></div>
+        <nav class="nav" aria-label="Demo">
+          <div class="brand"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="13" width="24" height="9" fill="#ffe14d"/><path d="M9 8v16M13.5 8v16M18 8v16M22.5 8v16" stroke="#17181b" stroke-width="2.4" fill="none"/><path d="M6 21 26 11" stroke="#17181b" stroke-width="2.8" fill="none"/></svg><div class="wm">Team Performance<small>Coral Line Support</small></div></div>
+          <a href="#d"><svg class="ic"><use href="#i-over"/></svg>Overview</a>
+          <a href="#d" aria-current="page"><svg class="ic"><use href="#i-team"/></svg>Team</a>
+          <a href="#d"><svg class="ic"><use href="#i-surv"/></svg>Surveys</a>
+          <a href="#d"><svg class="ic"><use href="#i-ext"/></svg>Extensions</a>
+          <a class="help" href="#d">How it works</a>
+        </nav>
+        <div class="main">
+          <div class="top"><div><h3>Team</h3><p class="sub">Credit for calls and offline work, by extension</p></div><span class="sp"></span><span class="key"><span class="bar" style="display:inline-flex;width:44px;height:10px;vertical-align:-1px"><i class="c" style="width:50%"></i><i class="o" style="width:50%"></i></span>&nbsp; calls · offline work</span></div>
+          <table class="log dd stack"><thead><tr><th>Ext</th><th>Person</th><th>Credited time</th><th>Updates</th><th>Focus</th><th>Status</th></tr></thead><tbody id="d-team"></tbody></table>
+        </div>
+      </div>
+      <div class="scrim"></div>
+      <aside class="drawer" aria-label="Lucia Moreno">
+        <header><h3>Lucia Moreno</h3><p class="sub">Ext 105 · CRM-1046 · <span class="t review"><span class="mk">Review</span></span></p></header>
+        <dl class="kv"><dt>Calls</dt><dd class="num">14 calls · 1h 48m</dd><dt>Offline work</dt><dd class="num">3h 10m · 2 blocks</dd><dt>Updates logged</dt><dd class="num">49</dd><dt>Focus rating</dt><dd><span class="rate low">26</span></dd></dl>
+        <b style="display:block;margin-top:18px;font-family:Bitter,serif">Her day, 8 AM to 6 PM</b>
+        <div class="tl" aria-hidden="true" id="d-tl"></div>
+        <span class="key"><i style="background:#17181b"></i>Calls &nbsp; <i style="background:repeating-linear-gradient(135deg,#17181b 0 1.5px,#fff 1.5px 4px)"></i>Case review 9:40–11:10, paperwork 2:15–3:55</span>
+        <p class="why">49 updates across 190 offline minutes gives a focus rating of 26. Under 40 asks for a look, not a verdict: long case reviews often log few updates.</p>
+        <footer><button class="btn pri"><svg class="ic"><use href="#i-check"/></svg>Clear flag</button><button class="btn">Close</button></footer>
+      </aside>
+    </div>
+
+    <p class="cap">3 · Surveys, with a Sent row open on the phone</p>
+    <div class="screen">
+      <div class="surv">
+        <div class="main">
+          <div class="top"><div><h3>Surveys</h3><p class="sub">Every call, newest first, and what the two rules did with it</p></div><span class="sp"></span><button class="btn"><svg class="ic"><use href="#i-dl"/></svg>Export CSV</button><button class="btn pri"><svg class="ic f" style="width:13px;height:13px"><use href="#i-play"/></svg>Run sample batch</button></div>
+          <div class="rules">
+            <p><b>Rule 1.</b> A call under 2 minutes gets no text.</p>
+            <p><b>Rule 2.</b> A customer asked in the last 24 hours is not asked again.</p>
+            <p class="edit">Edit rules: not available in the demo</p>
+          </div>
+          <table class="log dd stack"><thead><tr><th>Time</th><th>Person</th><th>Length</th><th>Customer</th><th>Outcome</th></tr></thead><tbody id="d-surv"></tbody></table>
+        </div>
+        <div class="side">
+          <span class="notsent">Not sent: demo</span>
+          <div class="phone" aria-label="The text Lucia's customer would get">
+            <i class="sd" style="left:-3px;top:110px;height:28px;background:#17181b"></i><i class="sd" style="left:-3px;top:156px;height:52px;background:#17181b"></i><i class="sd" style="right:-3px;top:170px;height:72px;background:#17181b"></i>
+            <div class="scr">
+              <div class="island"></div>
+              <div class="status"><span>2:41</span><span style="display:flex;gap:5px;align-items:center"><svg width="18" height="12" viewBox="0 0 18 12"><path d="M1 11V8M6 11V5.5M11 11V3M16 11V1" stroke="#111" stroke-width="2.6" stroke-linecap="round"/></svg><svg width="27" height="12" viewBox="0 0 27 12"><rect x=".5" y=".5" width="23" height="11" rx="3.2" fill="none" stroke="#111" opacity=".5"/><rect x="2" y="2" width="17" height="8" rx="2" fill="#111"/><path d="M25 4v4" stroke="#111" stroke-width="1.6" opacity=".5"/></svg></span></div>
+              <div class="mhead"><svg class="ic back" width="11" height="18"><use href="#i-back"/></svg><span class="av">CL</span><span>Coral Line Support</span></div>
+              <div class="thread"><div class="when">Text Message · Today 2:41 PM</div><div class="bub">Hi, thanks for speaking with Lucia at Coral Line Support. How did we do? Reply 1 to 5.</div></div>
+              <div class="compose">Text Message</div>
+              <span class="home"></span>
+            </div>
+          </div>
+          <p class="sub" style="text-align:center;max-width:30ch">Sent because the call ran 4:12 and this number had no text in the last 24 hours.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="cap">4 · Landing page, first screen</p>
+    <div class="screen">
+      <div class="hero">
+        <div class="toprow"><div class="brand" style="margin:0"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="13" width="24" height="9" fill="#ffe14d"/><path d="M9 8v16M13.5 8v16M18 8v16M22.5 8v16" stroke="#17181b" stroke-width="2.4" fill="none"/><path d="M6 21 26 11" stroke="#17181b" stroke-width="2.8" fill="none"/></svg><div class="wm">Team Performance</div></div><a class="btn" href="#d">Try the demo</a></div>
+        <div>
+          <h1>Phone logs that credit the right person, and surveys that know when to stop.</h1>
+          <p>For call centers and service teams under 50 people that take calls all day. Every desk-phone call lands on the right person's record. Customers get one rating text, only when asking is worth it.</p>
+          <div class="cta"><a class="btn pri" href="#d">Try the demo</a><span class="fine">No sign-up. Sample data. Texts and the CRM are simulated.</span></div>
+        </div>
+        <div>
+          <div class="paper">
+            <h4>Call log, Tuesday</h4>
+            <div class="lead"><span><b>2:41 PM</b> Lucia Moreno 4:12</span><span class="d"></span><span class="n">Sent</span></div>
+            <div class="lead skip"><span><b>2:38 PM</b> Marcus Bell <span class="mk">1:47</span></span><span class="d"></span><span class="n">Under 2 minutes</span></div>
+            <div class="lead skip"><span><b>2:31 PM</b> Jamal Whitfield 3:05</span><span class="d"></span><span class="n">Asked today</span></div>
+            <div class="lead" style="margin-top:8px"><span><span class="mk"><b>Lucia Moreno</b> focus 26</span></span><span class="d"></span><span class="n">Review</span></div>
+          </div>
+          <p class="sub" style="margin-top:14px">A flag is a question for a person, never a verdict.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script>
+const team=[[101,'Rosa Delgado','CRM-1042',58,36,'6h 12m',61,100,'ok'],[102,'Marcus Bell','CRM-1043',66,22,'5h 40m',44,88,'ok'],[104,'Devon Okafor','CRM-1045',44,48,'6h 05m',51,36,'review'],[105,'Lucia Moreno','CRM-1046',34,52,'5h 15m',49,26,'review'],[107,'Priya Nair','CRM-1048',40,50,'5h 58m',57,31,'cleared'],[108,'Jamal Whitfield','CRM-1049',70,18,'5h 52m',39,93,'ok']];
+const calls=[['2:41 PM','Lucia Moreno',105,'4:12','(305) ···-0142','sent'],['2:38 PM','Marcus Bell',102,'1:47','(786) ···-0118','short'],['2:31 PM','Jamal Whitfield',108,'3:05','(954) ···-0107','asked'],['2:29 PM','Unknown',120,'2:50','(561) ···-0163','nomatch'],['2:22 PM','Rosa Delgado',101,'6:30','(305) ···-0119','sent'],['2:17 PM','Priya Nair',107,'2:00','(954) ···-0131','sent']];
+const hours=[11,19,24,22,17,15,21,23,18,12],hl=['8 AM','9 AM','10 AM','11 AM','Noon','1 PM','2 PM','3 PM','4 PM','5 PM'];
+const label={sent:'Sent',short:'Skipped: under 2 minutes',asked:'Skipped: already asked today',nomatch:'No match: extension not mapped'};
+const $=id=>document.getElementById(id);
+const ck='<svg class="ic"><use href="#i-check"/></svg>',dm='<svg class="ic f"><use href="#i-diamond"/></svg>';
+// day blocks (36 half-steps of 17 min ~ 600 min)
+const blocks=[['c',1,3],['c',4,6],['o',6,12],['c',13,15],['c',16,18],['o',24,31],['c',32,35]];
+const pc=(a,b)=>`left:${a/36*100}%;width:${(b-a)/36*100}%`;
+
+function teamRow(r,look){const [ext,name,crm,c,o,time,up,f,st]=r;const low=f<40&&st!=='ok'||st==='review'&&f<40;
+  const stat=st==='ok'?`<span class="t ok">${look==='C'?ck:''}On track</span>`:st==='review'?`<span class="t review">${look==='C'?dm:''}${look==='D'?'<span class="mk">Review</span>':'Review'}</span>`:`<span class="t cleared">${look==='C'?ck:''}Cleared by Odalys</span>`;
+  const rv=st==='review';
+  return `<tr class="${rv?'rv':''} ${ext===105?'sel':''}"><td class="num">${ext}</td><td><div class="who">${name}<small style="color:var(--muted)">${crm}</small></div></td><td class="hide-s"><div class="bar"><i class="c" style="width:${c}%"></i><i class="o" style="width:${o}%"></i></div><small style="color:var(--muted)">${time}</small></td><td class="num hide-s">${up}</td><td><span class="rate ${rv?'low':''}">${f}</span></td><td>${stat}</td></tr>`}
+
+/* route icon for call rows: stops = Call, Extension mapped, 2 min, 24 h, Text */
+function route(stage,cls){const xs=[8,40,72,104,136],idx={sent:4,asked:3,short:2,nomatch:1}[stage];
+  const col=stage==='sent'?'var(--accent)':'var(--ink)';let s=`<svg class="${cls||'mini'}" viewBox="0 0 144 20" role="img" aria-label="${label[stage]}" preserveAspectRatio="xMinYMid meet"><path d="M8 10H136" stroke="var(--rule)" stroke-width="5"/><path d="M8 10H${xs[idx]}" stroke="${col}" stroke-width="5"/>`;
+  xs.forEach((x,i)=>{const r=i===4?5.5:4.2;if(i<=idx)s+=`<circle cx="${x}" cy="10" r="${r}" fill="${col}"/>`;else s+=`<circle cx="${x}" cy="10" r="${r}" fill="#fff" stroke="var(--rule)" stroke-width="2.4"/>`});
+  if(stage!=='sent')s+=`<path d="M${xs[idx]+7} 3V17" stroke="var(--ink)" stroke-width="3"/>`;return s+'</svg>'}
+
+/* ---- C ---- */
+$('c-hrs').innerHTML=hours.map(n=>`<div class="${n>=23?'max':''}">${n}<i style="height:${n/24*100}px"></i></div>`).join('');
+$('c-team').innerHTML=team.map(r=>teamRow(r,'C')).join('');
+$('c-tl').innerHTML=blocks.map(b=>`<i class="${b[0]}" style="${pc(b[1],b[2])}"></i>`).join('');
+$('c-rt').innerHTML=['Call comes in|Every desk-phone call is logged.','Extension is mapped|Credited to the right person.','2 minutes or longer|Shorter calls get no text.','Not asked in 24 hours|One text per customer a day.'].map((t,i)=>{const [b,s]=t.split('|');const xs=['M0 11H100%'];return `<div><svg viewBox="0 0 200 22" preserveAspectRatio="none"><path d="M0 11H${i===3?14:200}" stroke="var(--ink)" stroke-width="6"/><circle cx="12" cy="11" r="8" fill="#fff" stroke="var(--ink)" stroke-width="5"/></svg><b>${b}</b><span>${s}</span></div>`}).join('');
+$('c-surv').innerHTML=calls.map(([t,p,e,len,num,st],i)=>`<tr class="${i===0?'sel':''}"><td class="num">${t}</td><td><div class="who">${p}<small style="color:var(--muted)">Ext ${e}</small></div></td><td class="num hide-s">${len}</td><td class="num hide-s">${num}</td><td class="hide-s">${route(st)}</td><td><span class="out ${st==='sent'?'sent':''}">${label[st]}</span></td></tr>`).join('');
+$('c-slip').innerHTML=[['2:41 PM · Lucia Moreno · 4:12','sent'],['2:38 PM · Marcus Bell · 1:47','short'],['2:31 PM · Jamal Whitfield · 3:05','asked']].map(([l,st])=>`<div class="r"><div class="l"><span>${l}</span><span>${{sent:'Sent',short:'Under 2 minutes',asked:'Asked today'}[st]}</span></div>${route(st)}</div>`).join('');
+
+/* ---- D ---- */
+$('d-hrs').innerHTML=hours.map((n,i)=>`<div class="hr"><span>${hl[i]}</span><i style="width:${n/24*100}%"></i><b>${n>=23?`<span class="mk">${n}</span>`:n}</b></div>`).join('');
+$('d-team').innerHTML=team.map(r=>teamRow(r,'D')).join('');
+$('d-tl').innerHTML=blocks.map(b=>`<i class="${b[0]}" style="${pc(b[1],b[2])}"></i>`).join('');
+$('d-surv').innerHTML=calls.map(([t,p,e,len,num,st],i)=>{const m=x=>`<span class="mk">${x}</span>`;
+  const person=st==='nomatch'?`<div class="who">${m('Unknown')}<small style="color:var(--muted)">Ext ${e}</small></div>`:`<div class="who">${p}<small style="color:var(--muted)">Ext ${e}</small></div>`;
+  return `<tr class="${i===0?'sel':''}"><td class="num">${t}</td><td>${person}</td><td class="num hide-s">${st==='short'?m(len):len}</td><td class="num hide-s">${st==='asked'?m(num):num}</td><td><span class="out ${st==='sent'?'sent':'skip'}">${st==='sent'?ck+'Sent':label[st]}</span></td></tr>`}).join('');
+</script>
+</body>
+</html>
