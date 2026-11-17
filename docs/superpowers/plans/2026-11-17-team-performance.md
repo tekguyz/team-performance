@@ -45,7 +45,7 @@
 
 - [ ] **Step 1:** Write `lib/__tests__/brand.test.ts`: `expect(BRAND.business).toBe("Coral Line Support")`; `expect(JSON.stringify(BRAND)).not.toMatch(/tekguyz/i)`.
 - [ ] **Step 2:** Run `npx vitest run lib/__tests__/brand.test.ts`. Expected: FAIL (module missing).
-- [ ] **Step 3:** Create the scaffold files above. `.claude/launch.json` has one config `team-performance` running `npm run dev` with `"autoPort": true` and no port flag. `ci.yml` runs `npm ci`, `npm run lint`, `npm run typecheck`, `npm run test:unit`, `npm run build`, then fails if `grep -ri "advantage" .next/server .next/static` finds anything. ADR 0001 adapts `C:/Projects/quote-to-paid/docs/adr/0001-browser-only-demo.md` (state in browser storage with in-memory fallback, "Try the demo" is a plain link, no sign-in page). `CLAUDE.md` states the test rules and the browser-only rule.
+- [ ] **Step 3:** Create the scaffold files above. `.claude/launch.json` has one config `team-performance` running `npm run dev` with `"autoPort": true` and no port flag. `ci.yml` runs `npm ci`, `npm run lint`, `npm run typecheck`, `npm run test:unit`, `npm run build`, then fails if `grep -riE "advantage[- ]?teams" .next/server .next/static` finds anything (the narrow pattern, so ordinary copy like "take advantage" never fails the build). ADR 0001 adapts `C:/Projects/quote-to-paid/docs/adr/0001-browser-only-demo.md` (state in browser storage with in-memory fallback, "Try the demo" is a plain link, no sign-in page). `CLAUDE.md` states the test rules and the browser-only rule.
 - [ ] **Step 4:** Run `npm install`, then `npm run test:unit`. Expected: PASS. Run `npm run build`. Expected: build succeeds.
 - [ ] **Step 5:** Commit `chore: scaffold Team Performance app` with `refs #1`.
 
@@ -105,11 +105,11 @@
 - Produces:
   - `mulberry32(seed: number): () => number` in `random.ts` (seeded, so the sample is the same for every visitor and every test).
   - `SAMPLE_PEOPLE: Person[]` — 14 made-up people, extensions `"101"`–`"114"`, CRM ids like `"CRM-1042"`.
-  - `SAMPLE_DATE = "2026-11-17"`; the day runs 08:00–18:00 local, stored as ISO.
+  - `SAMPLE_DATE = "2026-11-17"`; the day runs 08:00–18:00 in `DEMO_TZ = "America/New_York"` (Coral Line Support's zone), stored as ISO with the offset (`2026-11-17T08:00:00-05:00`). Every hour check, the 18:00 → 08:00 jump and `volumeByHour` read the hour in `DEMO_TZ` (`Intl.DateTimeFormat` with `timeZone: DEMO_TZ`), never `Date#getHours()`, so CI (UTC), the laptop (Eastern) and the visitor's browser all agree and the first render matches the server.
   - `sampleDay(): { calls: LoggedCall[]; blocks: WorkBlock[] }` — about 180 calls run through `evaluateCalls`, every outcome present, at least one call on an unmapped extension `"120"`; blocks such that exactly 3 people have focus under 40, one of them (a long "Case review" with few updates) clearly offline research.
   - `sampleBatch(seed: number, log: LoggedCall[], people: Person[]): Call[]` — 20 calls, timed after the latest call in `log` at 2–6 minute gaps; when the next time passes 18:00 it jumps to 08:00 the next day; 3 to 4 customers taken from customers already `sent` in the last 24 h, the rest new; at least 3 under 120 s; one on extension `"120"`.
 
-- [ ] **Step 1:** Write tests: `sampleDay is the same on every call` (deep equal twice); `sampleDay has between 170 and 190 calls`; `sampleDay has all four outcomes`; `exactly 3 people need review`; `sampleBatch returns 20 calls all after the latest logged call`; `50 batches in a row keep times increasing and stay within 08:00–18:00`; `in each of 50 batches at least 10 calls are sent` (cap never swallows a batch); `a batch includes a repeat customer that comes back as skipped_daily_cap`.
+- [ ] **Step 1:** Write tests: `sampleDay is the same on every call` (deep equal twice); `sampleDay has between 170 and 190 calls`; `sampleDay has all four outcomes`; `exactly 3 people need review`; `sampleBatch returns 20 calls all after the latest logged call`; `50 batches in a row keep times increasing and stay within 08:00–18:00`; `in each of 50 batches at least 10 calls are sent` (cap never swallows a batch); `a batch includes a repeat customer that comes back as skipped_daily_cap`; `hours are the same in any time zone` (inside the test, set `process.env.TZ` to `"UTC"`, then `"Asia/Tokyo"`, rebuild `sampleDay()` and 10 batches each time, and expect the same ISO strings and hours within 08:00–18:00 read in `DEMO_TZ`; restore `TZ` after).
 - [ ] **Step 2:** Run `npx vitest run lib/demo/__tests__/sample.test.ts`. Expected: FAIL.
 - [ ] **Step 3:** Implement `random.ts` and `sample.ts`. Names and numbers are made up; customer numbers use the fictional `(555) 01xx` range and display masked as `(555) •••-0142`.
 - [ ] **Step 4:** Run the same command. Expected: PASS.
@@ -230,14 +230,17 @@ Runs with the Impeccable skill. The founder's design references are in `docs/des
 - [ ] **Step 1:** Landing page per `DEMO-STANDARD.md`: the line "Phone logs that credit the right person, and surveys that know when to stop.", who it is for (small call centers and service teams under 50 people that take calls all day), how the credit works, the two survey rules shown plainly, fair review, a real screen of the demo, "Try the demo" as a plain link to `/demo`, a plain statement that texts and the CRM are simulated in the demo, footer "Built by TEKGUYZ". No sign-in link (ADR 0001).
 - [ ] **Step 2:** `opengraph-image.tsx` in the app's own look; title and description in `metadata` using `SITE_URL`; `robots.ts` allows `/` and disallows `/demo`; `sitemap.ts` lists `/` only.
 - [ ] **Step 3:** Check in the preview pane at 375 and 1440 px. Commit `feat: landing page and link preview` with `refs #1`.
+- [ ] **Step 4 (before this session's PR, per the global testing rules):** Run the screen check skill on `/`, `/demo`, `/demo/team`, `/demo/surveys`, `/demo/settings`; fix what it finds, including the Review Focus phone-width items. Run `web-design-guidelines` on every screen file from Tasks 8–12 and `vercel-react-best-practices` on their React code; fix what they find. The PR body says `Skills pass: <what was fixed>`.
+
+**Checking screens while building (Tasks 8–12):** read the page with `read_page` / `get_page_text` first and take a screenshot only to judge the look, at reduced `scale`, so the session's context lasts.
 
 ### Task 13: Checks before the PR
 
 - [ ] **Step 1:** Run `npm run lint`, `npm run typecheck`, `npm run test:unit`, `npm run build`. Expected: all pass.
-- [ ] **Step 2:** Run the screen check skill on `/`, `/demo`, `/demo/team`, `/demo/surveys`, `/demo/settings`; fix what it finds. Include the Review Focus phone-width items.
-- [ ] **Step 3:** Run `web-design-guidelines` on the changed screen files and `vercel-react-best-practices` on the React code; fix what they find; note it for the PR body as `Skills pass: …`.
-- [ ] **Step 4:** Frame test: load `/demo` inside an iframe on another origin in the preview pane, run a batch, clear a flag. With storage blocked it still works in memory.
-- [ ] **Step 5:** Request a code review (superpowers:requesting-code-review) of the whole branch, fix findings, write `README.md` per `C:/Projects/claude-config/README-STANDARD.md`, commit, open the PR with `closes #1` only if every ship box is done, otherwise `refs #1`.
+- [ ] **Step 2:** The screen check and skills pass already ran in Task 12 Step 4. Re-run the screen check only on a screen changed since then.
+- [ ] **Step 3:** Frame test: load `/demo` inside an iframe on another origin in the preview pane, run a batch, clear a flag. With storage blocked it still works in memory.
+- [ ] **Step 4:** Request a code review (superpowers:requesting-code-review) of everything built since commit `985ba2f` (the plan commit), not only this branch; fix findings.
+- [ ] **Step 5:** Write `README.md` per `C:/Projects/claude-config/README-STANDARD.md`, commit, open the PR with `closes #<this session's issue>` and `refs #1`. Issue #1 closes by hand in Task 14 Step 5 once every ship box is ticked.
 
 ### Task 14: Ship
 
