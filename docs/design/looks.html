@@ -6,7 +6,7 @@
 <title>Team Performance · Two looks</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Big+Shoulders+Display:wght@700;800;900&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=Big+Shoulders+Display:wght@700;800;900&family=Albert+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ---------- page chrome (neutral, not part of either look) ---------- */
 *{box-sizing:border-box;margin:0;padding:0}
@@ -225,7 +225,7 @@ table.log td{padding:10px;vertical-align:middle}
    OPTION B · BOX SCORE
    ===================================================================== */
 .B{--ground:#ffffff;--ink:#141414;--muted:#5b5b5b;--rule:#d9d9d9;--rule-2:#ececec;--panel:#f5f5f4;--accent:#c8461f;--accent-ink:#ffffff;--accent-tint:#fbe9e2;--accent-deep:#9b3414;--warm:#f2b49c;
-  --cut:8px;font-family:"Geist",system-ui,sans-serif;color:var(--ink)}
+  --cut:8px;font-family:"Albert Sans",system-ui,sans-serif;color:var(--ink)}
 .B ::selection{background:var(--warm);color:var(--ink)}
 .B .chamfer{clip-path:polygon(0 0,calc(100% - var(--cut)) 0,100% var(--cut),100% 100%,0 100%)}
 .B .app{background:var(--ground);grid-template-columns:200px 1fr}
@@ -233,11 +233,11 @@ table.log td{padding:10px;vertical-align:middle}
 .B .nav a{color:#d6d6d6;border-left:3px solid transparent;padding-left:9px}
 .B .nav a[aria-current]{color:#fff;border-left-color:var(--accent);background:#222;font-weight:600}
 .B .wm{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:19px;line-height:.95;text-transform:uppercase;letter-spacing:.01em}
-.B .wm small{display:block;font-family:"Geist",sans-serif;font-weight:500;text-transform:none;font-size:11.5px;color:#bdbdbd;letter-spacing:0}
+.B .wm small{display:block;font-family:"Albert Sans",sans-serif;font-weight:500;text-transform:none;font-size:11.5px;color:#bdbdbd;letter-spacing:0}
 .B .banner{background:var(--accent-tint);color:var(--accent-deep);border-bottom:1px solid #f0c9b9}
 .B h3{font-family:"Big Shoulders Display",sans-serif;font-weight:800;font-size:32px;line-height:1;text-transform:uppercase;letter-spacing:.005em}
 .B .sub{color:var(--muted);font-size:13.5px}
-.B .btn{--cut:7px;font:600 13.5px/1 "Geist",sans-serif;padding:11px 16px;background:var(--ink);color:#fff;border:0;cursor:pointer;display:inline-flex;gap:8px;align-items:center;text-decoration:none;clip-path:polygon(0 0,calc(100% - var(--cut)) 0,100% var(--cut),100% 100%,0 100%);white-space:nowrap}
+.B .btn{--cut:7px;font:600 13.5px/1 "Albert Sans",sans-serif;padding:11px 16px;background:var(--ink);color:#fff;border:0;cursor:pointer;display:inline-flex;gap:8px;align-items:center;text-decoration:none;clip-path:polygon(0 0,calc(100% - var(--cut)) 0,100% var(--cut),100% 100%,0 100%);white-space:nowrap}
 .B .btn.pri{background:var(--accent)}
 .B .btn.ghost{background:var(--panel);color:var(--ink);box-shadow:inset 0 0 0 1px var(--rule)}
 .B .sect{border-top:3px solid var(--ink);margin-top:20px}
@@ -387,7 +387,7 @@ table.log td{padding:10px;vertical-align:middle}
       <thead><tr><th></th><th>Ground</th><th>Accent</th><th>Display font</th><th>Body font</th><th>Shape</th></tr></thead>
       <tbody>
         <tr><th>A · Harbor chart</th><td><span class="sw" style="background:#e6f0f4"></span>Pale sea-blue shell <code>#e6f0f4</code> around white work areas</td><td><span class="sw" style="background:#a3125f"></span>Chart magenta <code>#a3125f</code></td><td>Archivo, semi-expanded</td><td>Archivo</td><td>Neatline: square corners, panels in a double hairline frame, buttons with an inset second rule, no rounding anywhere</td></tr>
-        <tr><th>B · Box score</th><td><span class="sw" style="background:#fff"></span>Pure white <code>#ffffff</code> with a solid ink side bar <code>#141414</code></td><td><span class="sw" style="background:#c8461f"></span>Coral orange <code>#c8461f</code></td><td>Big Shoulders Display, condensed caps</td><td>Geist</td><td>Chamfered: square shapes with one clipped top-right corner on buttons and tags, a 3px ink rule over each section</td></tr>
+        <tr><th>B · Box score</th><td><span class="sw" style="background:#fff"></span>Pure white <code>#ffffff</code> with a solid ink side bar <code>#141414</code></td><td><span class="sw" style="background:#c8461f"></span>Coral orange <code>#c8461f</code></td><td>Big Shoulders Display, condensed caps</td><td>Albert Sans</td><td>Chamfered: square shapes with one clipped top-right corner on buttons and tags, a 3px ink rule over each section</td></tr>
         <tr><th>Closest shipped row</th><td colspan="5"><b>A</b> is closest to <b>no-show-rescue</b> (cool ground, square-ish, no shadows). It differs in Accent (magenta, not teal), both fonts, Ground (blue shell, not off-white) and Shape (double neatline, not single outline). <b>B</b> is closest to <b>quote-to-paid</b> (square shapes, ruled lists). It differs in Accent (coral orange, not teal), Ground (pure white with an ink bar, not warm off-white), both fonts, and Shape (chamfered corners and heavy section rules, not 2px ledger hairlines). Neither uses pill buttons with soft cards or Bricolage Grotesque.</td></tr>
       </tbody>
     </table>
