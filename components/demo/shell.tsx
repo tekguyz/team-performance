@@ -12,7 +12,7 @@ const SCREENS = [
   { href: "/demo", label: "Overview" },
   { href: "/demo/team", label: "Team" },
   { href: "/demo/surveys", label: "Surveys" },
-  { href: "/demo/extensions", label: "Extensions" },
+  { href: "/demo/settings", label: "Extensions" },
 ];
 
 export function DemoShell({ children }: { children: React.ReactNode }) {
