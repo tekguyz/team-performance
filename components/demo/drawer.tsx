@@ -49,6 +49,7 @@ export function Drawer({
 
   return (
     <dialog
+      data-screen-ok="scroll-inside: a drawer scrolls its own long content, like a native sheet"
       ref={ref}
       className="drawer"
       aria-labelledby={titleId}

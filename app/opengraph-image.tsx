@@ -13,8 +13,7 @@ const PLUM = "#5c2d91";
 
 /** The link preview, in the Route line look (DESIGN.md): ink on white, one plum route end, no cards. */
 export default async function Image() {
-  const heavy = await atkinson(800);
-  const body = await atkinson(400);
+  const [heavy, body] = await Promise.all([atkinson(800), atkinson(400)]);
   const fonts = [
     ...(heavy ? [{ name: "Atkinson", data: heavy, weight: 800 as const, style: "normal" as const }] : []),
     ...(body ? [{ name: "Atkinson", data: body, weight: 400 as const, style: "normal" as const }] : []),

@@ -43,7 +43,8 @@ export function TeamTable() {
               <td className="num hide-s">{r.person.extension}</td>
               <td>
                 <div className="who">
-                  <button type="button" className="rowbtn" onClick={(e) => (e.stopPropagation(), setOpenId(r.person.id))}>
+                  <button type="button" className="rowbtn"
+                      data-screen-ok="taps: the whole row opens it; this button is the keyboard way in" onClick={(e) => (e.stopPropagation(), setOpenId(r.person.id))}>
                     {r.person.name}
                   </button>
                   <small>

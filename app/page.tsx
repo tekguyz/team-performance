@@ -42,7 +42,7 @@ export default function Home() {
       <header className="l-head">
         <Link href="/" className="l-brand" aria-label={`${BRAND.product}, home`}>
           <LogoMark size={32} />
-          <span>{BRAND.product}</span>
+          <span translate="no">{BRAND.product}</span>
         </Link>
         <Link className="btn pri" href="/demo">
           Try the demo
@@ -236,7 +236,9 @@ export default function Home() {
         <span>
           {BRAND.product}. {BRAND.business} is a made-up call center.
         </span>
-        <a href="https://tekguyz.com">Built by TEKGUYZ</a>
+        <a href="https://tekguyz.com" translate="no">
+          Built by TEKGUYZ
+        </a>
       </footer>
     </div>
   );

@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { PlusIcon } from "@/components/demo/icons";
 import type { Person } from "@/lib/demo/types";
 import { useDemo } from "@/lib/demo/use-demo";
@@ -15,14 +15,21 @@ export function Extensions() {
   const [added, setAdded] = useState<Person | null>(null);
   const id = useId();
 
-  const callsBy = new Map<string, number>();
-  const unmatched = new Map<string, number>();
-  for (const c of state.calls) {
-    if (c.personId) callsBy.set(c.personId, (callsBy.get(c.personId) ?? 0) + 1);
-    else unmatched.set(c.extension, (unmatched.get(c.extension) ?? 0) + 1);
-  }
-  const rows = [...state.people].sort((a, b) => a.extension.localeCompare(b.extension, undefined, { numeric: true }));
-  const unmapped = [...unmatched].filter(([ext]) => !state.people.some((p) => p.extension === ext));
+  // Counted once per change to the log, not on every keystroke in the form.
+  const { callsBy, rows, unmapped } = useMemo(() => {
+    const callsBy = new Map<string, number>();
+    const unmatched = new Map<string, number>();
+    for (const c of state.calls) {
+      if (c.personId) callsBy.set(c.personId, (callsBy.get(c.personId) ?? 0) + 1);
+      else unmatched.set(c.extension, (unmatched.get(c.extension) ?? 0) + 1);
+    }
+    const mappedExt = new Set(state.people.map((p) => p.extension));
+    return {
+      callsBy,
+      rows: state.people.toSorted((a, b) => a.extension.localeCompare(b.extension, undefined, { numeric: true })),
+      unmapped: [...unmatched].filter(([ext]) => !mappedExt.has(ext)),
+    };
+  }, [state.calls, state.people]);
 
   const ext = form.extension.trim();
   const taken = state.people.find((p) => p.extension === ext);
@@ -107,8 +114,8 @@ export function Extensions() {
         <p className="sub">New calls on it are credited from now on. Calls already logged as No match stay as they were.</p>
         <form onSubmit={submit} noValidate>
           {input("extension", "Extension", { inputMode: "numeric", placeholder: "120…", maxLength: 6, className: "num" })}
-          {input("name", "Person", { placeholder: "Full name…" })}
-          {input("crm", "CRM user", { placeholder: "CRM-1056…" })}
+          {input("name", "Person", { placeholder: "Full name…", maxLength: 40 })}
+          {input("crm", "CRM user", { placeholder: "CRM-1056…", maxLength: 24 })}
           <button type="submit" className="btn pri">
             <PlusIcon />
             Add extension

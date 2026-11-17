@@ -30,7 +30,7 @@ export function DemoShell({ children }: { children: React.ReactNode }) {
         <nav className="nav" aria-label="Demo">
           <div className="brand">
             <LogoMark />
-            <div className="wm">
+            <div className="wm" translate="no">
               {BRAND.product}
               <small>{BRAND.business}</small>
             </div>

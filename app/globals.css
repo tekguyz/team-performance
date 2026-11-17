@@ -41,6 +41,12 @@ body {
 a,
 button {
   touch-action: manipulation;
+  -webkit-tap-highlight-color: rgb(92 45 145 / 0.15);
+}
+h1,
+h2,
+h3 {
+  text-wrap: balance;
 }
 .skip {
   position: absolute;
@@ -595,6 +601,10 @@ table.ext td.r {
 table.ext tbody tr {
   cursor: default;
 }
+table.ext td.nm,
+table.ext td.crm {
+  overflow-wrap: anywhere;
+}
 table.ext td.nm {
   font-weight: 700;
 }
@@ -652,6 +662,7 @@ table.ext td.crm {
 }
 .fld input {
   width: 100%;
+  min-height: 44px;
   padding: 8px 10px 6px;
   border: 0;
   border-bottom: 3px solid var(--ink);
@@ -865,7 +876,7 @@ dl.kv dd {
 .phone {
   position: relative;
   flex: none;
-  width: min(296px, 100%, calc((100dvh - 250px) * 9 / 19.5));
+  width: min(296px, 100%, calc((100dvh - 300px) * 9 / 19.5));
   min-width: 220px;
   aspect-ratio: 9 / 19.5;
   padding: 10px;
@@ -1203,6 +1214,9 @@ dl.kv dd {
 .l-log tbody tr:hover td {
   background: none;
 }
+.l-log td.num {
+  white-space: nowrap;
+}
 .l-log .who b {
   font-weight: 700;
 }
@@ -1256,6 +1270,14 @@ dl.kv dd {
   color: var(--ink);
   font-weight: 700;
   text-underline-offset: 3px;
+}
+.l-foot a:hover,
+.fig a:hover {
+  text-decoration-thickness: 2px;
+}
+.l-brand:hover span {
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 @media (max-width: 1023px) {
   .l-hero,
@@ -1366,6 +1388,34 @@ dl.kv dd {
   }
 }
 
+/* ---------- touch: 44 px targets without changing the look on a mouse ---------- */
+@media (pointer: coarse) {
+  .banner a,
+  .banner button,
+  .lnk,
+  .l-foot a,
+  .fig .n a {
+    display: inline-block;
+    padding-block: 13px;
+    margin-block: -13px;
+  }
+  .navl a,
+  .nav .help,
+  .drawer .close,
+  .filters button,
+  .btn {
+    min-height: 44px;
+  }
+  .navl a,
+  .filters button {
+    display: inline-flex;
+    align-items: center;
+  }
+  .l-brand {
+    min-height: 44px;
+  }
+}
+
 /* ---------- phone width ---------- */
 @media (max-width: 767px) {
   .banner {
@@ -1380,6 +1430,9 @@ dl.kv dd {
   }
   .nav .help {
     margin: 0;
+  }
+  .navl a {
+    padding-inline: 6px;
   }
   .nav .help .long {
     display: none;

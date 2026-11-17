@@ -19,7 +19,9 @@ export function Banner() {
         Reset demo
       </button>
       <Link href="/">Back to the overview page</Link>
-      <a href="https://tekguyz.com">Built by TEKGUYZ</a>
+      <a href="https://tekguyz.com" translate="no">
+        Built by TEKGUYZ
+      </a>
     </div>
   );
 }
