@@ -39,3 +39,11 @@ export function callsFiltered(s: DemoState, outcome: Outcome | "all"): LoggedCal
   const list = outcome === "all" ? s.calls : s.calls.filter((c) => c.outcome === outcome);
   return [...list].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
 }
+
+export type OutcomeCounts = Record<Outcome | "all", number>;
+
+export function outcomeCounts(s: DemoState): OutcomeCounts {
+  const c: OutcomeCounts = { all: s.calls.length, sent: 0, skipped_short: 0, skipped_daily_cap: 0, no_match: 0 };
+  for (const call of s.calls) c[call.outcome] += 1;
+  return c;
+}
