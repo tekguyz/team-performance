@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "app/globals.css"
+        ],
+        "createdAt": "2026-11-17T21:34:57.358Z",
+        "reason": "DESIGN.md rules 1 and 3 (founder-picked look C): the drawer's 6px plum edge and the route line drawn down the phone-width Overview list"
+      }
+    ]
+  }
+}
