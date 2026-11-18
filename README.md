@@ -1,7 +1,7 @@
 <p align="center"><img src="docs/banner.svg" alt="Team Performance" width="100%"></p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/status-shipping-5c2d91?style=flat&labelColor=ffffff" alt="Status: shipping">
+  <img src="https://img.shields.io/badge/status-live-5c2d91?style=flat&labelColor=ffffff" alt="Status: live">
   <img src="https://img.shields.io/badge/framework-Next.js_16-1c1824?style=flat&labelColor=ffffff" alt="Framework: Next.js 16">
   <img src="https://img.shields.io/badge/database-none_(browser_only)-5c2d91?style=flat&labelColor=ffffff" alt="Database: none, browser only">
   <img src="https://img.shields.io/badge/tests-Vitest-c3aedd?style=flat&labelColor=ffffff" alt="Tests: Vitest">
@@ -15,10 +15,17 @@
 
 | Row | |
 |---|---|
-| Phase | Shipping: deploy and ship checklist (#5) |
-| Shipped | Landing page and the full demo: Overview, Team, Surveys, Extensions |
-| Next | #5, then the parent issue #1 closes |
+| Phase | Live |
+| Shipped | Landing page and the full demo (Overview, Team, Surveys, Extensions), live 2026-11-17 |
+| Next | #11, minor polish from the code review |
 | Updated | 2026-11-17 |
+
+## Screenshots
+
+<p align="center">
+  <img src="showcase/survey-phone-desktop-light.png" alt="Surveys: the call log with a sent survey drawn on a phone" height="320">
+  <img src="showcase/team-review-desktop-light.png" alt="Team: a person with a Review flag and their sample day" height="320">
+</p>
 
 ## What it does
 
