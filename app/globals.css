@@ -911,15 +911,20 @@ dl.kv dd {
   border-radius: 20px;
   background: #000;
 }
+/* Three columns, the middle one as wide as the island, so the clock and icons never run under it at any phone size. */
 .phone .status {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 31% 1fr;
   align-items: center;
-  justify-content: space-between;
+  justify-items: center;
   height: 46px;
-  padding: 4px 24px 0 28px;
+  padding: 4px 6px 0;
   font-weight: 600;
   font-size: 14px;
   line-height: 1;
+}
+.phone .status > :last-child {
+  grid-column: 3;
 }
 .phone .mhead {
   position: relative;
