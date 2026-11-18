@@ -1,6 +1,6 @@
 # Team Performance: landing page and one-click demo
 
-Build issue: tekguyz/team-performance#1. Replaces the archived `tekguyz/Advantage-Teams` (live at `advantage-teams.vercel.app/dashboard`). Design approved by the founder on 2026-11-17. Sources read: the issue, `tekguyz-one/projects/team-performance/about.md` and `engineering.md`, the old repo's `README.md`, `INTERNAL_GUIDE.md` and help drawer (`components/dashboard/support-drawer.tsx`, `support-questions.ts`), `claude-config/DEMO-STANDARD.md` and `LOOKS.md`.
+Build issue: tekguyz/team-performance#1. Replaces the earlier version of this demo. Design approved by the founder on 2026-11-17. Sources read: the issue, `tekguyz-one/projects/team-performance/about.md` and `engineering.md`, the old repo's `README.md`, `INTERNAL_GUIDE.md` and help drawer (`components/dashboard/support-drawer.tsx`, `support-questions.ts`), `claude-config/DEMO-STANDARD.md` and `LOOKS.md`.
 
 ## Intent and the why
 
@@ -85,7 +85,7 @@ No sign-in page: there is no product to sign in to (same as Quote to Paid's ADR 
 - **Sample batch:** about 20 calls per press, built so every outcome shows up, including a repeat caller and one unmapped extension. Batch calls are timed after the latest call so far (the day continues toward 6 PM, then the next morning). Each press mixes new callers with a few who already got a text, so the daily cap shows without most of a batch becoming "already asked". Every screen reads one call log, so a batch moves the overview totals, the hourly chart and each person's Team numbers.
 - **Focus rating minutes:** the rating counts logged updates against minutes of offline work (case reviews, paperwork), as in the old build. Credited time is calls plus offline work and is shown on its own, so offline work always counts as credit; a low rating only means few updates were logged during that offline time, which is why it goes to a person to review.
 - **New extension in Settings:** credits calls from then on. Earlier "No match" calls stay as they were logged.
-- **The old live demo** (`advantage-teams.vercel.app`) is not touched by this build. At ship time Claude asks the founder whether to take it down or redirect it, and checks the portfolio and site links that point at it.
+- **The earlier demo** is removed everywhere, with no redirect (founder, 2026-11-18).
 - **Looks and logo:** the founder picks (2026-11-17). The plan stops after the options page and the logo page, and the screens are built once the pick is in `DESIGN.md`.
 
 ## Left to the builder

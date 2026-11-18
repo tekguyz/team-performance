@@ -6,7 +6,7 @@ Temporary folder. Collected 2026-11-17.
 
 Team Performance is the TEKGUYZ product for service businesses: phone logs that credit the right person, and smart surveys your customers actually answer. The feedback you need, without chasing anyone.
 
-Demo (checked earlier, not in this run): https://advantage-teams.vercel.app — "Advantage Teams Demo"
+Demo: https://team-performance-demo.vercel.app
 
 Existing asset to be aware of: `team-performance-feedback/` holds only `dashboard.png`. There was no Team Performance media folder in Drive as of 2026-11-11 — only a `team-performance` folder with 2 docs, no media. So these refs are the starting point, not a replacement for staged media.
 
