@@ -144,6 +144,7 @@ export function CallLog() {
                     <button
                       type="button"
                       className="rowbtn"
+                      data-screen-ok="taps: the whole row opens it; this button is the keyboard way in"
                       onClick={(e) => (e.stopPropagation(), setOpenId(c.id))}
                     >
                       {p?.name ?? "Unknown"}

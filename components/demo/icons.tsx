@@ -33,6 +33,14 @@ export function DownloadIcon({ className = "ic" }: P) {
   );
 }
 
+export function PlusIcon({ className = "ic" }: P) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 5v14M5 12h14" />
+    </svg>
+  );
+}
+
 export function PlayIcon({ className = "ic f" }: P) {
   return (
     <svg className={className} viewBox="0 0 24 24" aria-hidden="true" style={{ width: 13, height: 13 }}>
