@@ -23,6 +23,23 @@ describe("storage", () => {
     expect(loadState(withValue("null"))).toEqual(initialState());
     expect(loadState(withValue(JSON.stringify({ version: 1, calls: "oops" })))).toEqual(initialState());
   });
+  it("falls back on an old saved shape that is version 1 but half-valid", () => {
+    const good = reducer(initialState(), { type: "runBatch" });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- the test breaks the shape on purpose
+    const broken = (mutate: (s: Record<string, any>) => void) => {
+      const copy = JSON.parse(JSON.stringify(good));
+      mutate(copy);
+      return loadState(withValue(JSON.stringify(copy)));
+    };
+    expect(broken((s) => delete s.calls[0].customer)).toEqual(initialState());
+    expect(broken((s) => (s.calls[0].durationSec = "90"))).toEqual(initialState());
+    expect(broken((s) => (s.calls[0].outcome = "lost"))).toEqual(initialState());
+    expect(broken((s) => (s.calls[0].personId = 7))).toEqual(initialState());
+    expect(broken((s) => delete s.people[0].name)).toEqual(initialState());
+    expect(broken((s) => delete s.blocks[0].start)).toEqual(initialState());
+    expect(broken((s) => (s.cleared = { a: 1 }))).toEqual(initialState());
+    expect(broken(() => {})).toEqual(good);
+  });
   it("returns nothing saved as the sample day", () => {
     expect(loadState(withValue(null))).toEqual(initialState());
   });

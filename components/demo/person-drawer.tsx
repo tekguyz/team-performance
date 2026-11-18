@@ -86,7 +86,11 @@ export function PersonDrawer({ personId, onClose }: { personId: string | null; o
           <button
             type="button"
             className="btn pri"
-            onClick={() => dispatch({ type: "clearFlag", personId: row.person.id, at: new Date().toISOString() })}
+            onClick={() => {
+              dispatch({ type: "clearFlag", personId: row.person.id, at: new Date().toISOString() });
+              // The button goes away; keep keyboard focus on the result instead of the drawer body.
+              requestAnimationFrame(() => document.getElementById("cleared-status")?.focus());
+            }}
           >
             <CheckIcon />
             Clear flag
@@ -94,8 +98,8 @@ export function PersonDrawer({ personId, onClose }: { personId: string | null; o
         </div>
       )}
       {clearedAt && (
-        <p className="sub" role="status">
-          Cleared by {BRAND.supervisor} at {formatClock(clearedAt)}. The flag stays cleared for the day.
+        <p className="sub" role="status" tabIndex={-1} id="cleared-status">
+          Cleared by {BRAND.supervisor}. The flag stays cleared for the day.
         </p>
       )}
 
