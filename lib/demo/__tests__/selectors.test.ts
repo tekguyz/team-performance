@@ -26,7 +26,14 @@ describe("selectors after 50 batches", () => {
     expect(credited).toBe(s.calls.filter((c) => c.personId !== null).length);
   });
 
-  it("volume by hour covers hours 8 to 17 of the latest day and agrees with the log", () => {
+  it("volume by hour counts every day in the log, so the first batch never empties the chart", () => {
+    const one = reducer(initialState(), { type: "runBatch" });
+    const total = volumeByHour(one).reduce((n, r) => n + r.calls, 0);
+    expect(total).toBe(one.calls.length);
+    expect(total).toBeGreaterThan(volumeByHour(initialState()).reduce((n, r) => n + r.calls, 0));
+  });
+
+  it("volume by hour covers hours 8 to 17 and agrees with the log", () => {
     const rows = volumeByHour(s);
     expect(rows.map((r) => r.hour)).toEqual([8, 9, 10, 11, 12, 13, 14, 15, 16, 17]);
     expect(rows.every((r) => r.sent <= r.calls)).toBe(true);

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="300" viewBox="0 0 1280 300">
+  <rect width="1280" height="300" fill="#ffffff"/>
+  <g transform="translate(96 86) scale(4)">
+    <rect width="32" height="32" rx="6" fill="#f4f1f7"/>
+    <path d="M9 8v16M13.5 8v16M18 8v16M22.5 8v16" stroke="#1c1824" stroke-width="2.4" fill="none"/>
+    <path d="M6 21 26 11" stroke="#5c2d91" stroke-width="2.8" fill="none"/>
+  </g>
+  <text x="276" y="160" font-family="Georgia, serif" font-size="72" font-weight="700" fill="#5c2d91">Team Performance</text>
+  <text x="280" y="212" font-family="Arial, sans-serif" font-size="22" fill="#1c1824">Phone logs that credit the right person, and surveys that know when to stop.</text>
+  <rect y="298" width="1280" height="2" fill="#5c2d91"/>
+</svg>

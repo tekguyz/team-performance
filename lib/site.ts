@@ -1,1 +1,1 @@
-export const SITE_URL: string = process.env.SITE_URL ?? "https://team-performance.vercel.app";
+export const SITE_URL: string = process.env.SITE_URL ?? "https://team-performance-demo.vercel.app";

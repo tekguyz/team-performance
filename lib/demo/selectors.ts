@@ -1,5 +1,5 @@
 import { personDay } from "@/lib/demo/focus";
-import { dateKey, hourInDemoTz } from "@/lib/demo/time";
+import { hourInDemoTz } from "@/lib/demo/time";
 import type { DemoState } from "@/lib/demo/state";
 import type { LoggedCall, Outcome, PersonDay } from "@/lib/demo/types";
 
@@ -18,14 +18,10 @@ export function overview(s: DemoState): { processed: number; sent: number; scree
   };
 }
 
-/** Hours 8 to 17 of the latest day in the log. */
+/** Hours 8 to 17, every day in the log added together, so a batch that rolls into the next morning never empties the chart. */
 export function volumeByHour(s: DemoState): { hour: number; calls: number; sent: number }[] {
   const rows = Array.from({ length: 10 }, (_, i) => ({ hour: 8 + i, calls: 0, sent: 0 }));
-  if (s.calls.length === 0) return rows;
-  const latest = s.calls.reduce((m, c) => Math.max(m, Date.parse(c.at)), 0);
-  const day = dateKey(latest);
   for (const c of s.calls) {
-    if (dateKey(c.at) !== day) continue;
     const row = rows[hourInDemoTz(c.at) - 8];
     if (!row) continue;
     row.calls += 1;

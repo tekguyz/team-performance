@@ -21,6 +21,7 @@ export function Overview() {
   const long = mapped - c.skipped_short;
   const latest = state.calls.reduce((m, x) => Math.max(m, Date.parse(x.at)), 0);
   const chartDay = latest ? dayName(dateKey(latest)) : "";
+  const days = new Set(state.calls.map((x) => dateKey(x.at))).size;
 
   return (
     <>
@@ -77,7 +78,7 @@ export function Overview() {
       <section className="section" aria-labelledby="hrs-h">
         <h2 id="hrs-h">Calls by hour</h2>
         <p className="sub">
-          {chartDay}, 8 AM to 6 PM. The busiest hour is in plum.
+          {days > 1 ? `All ${days} days in the log, added up by hour` : `${chartDay}, 8 AM to 6 PM`}. The busiest hour is in plum.
         </p>
         <VolumeChart rows={volumeByHour(state)} />
       </section>
