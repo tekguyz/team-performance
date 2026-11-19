@@ -39,5 +39,22 @@ describe("callsToCsv", () => {
 });
 
 describe("csvFileName", () => {
-  it("matches the plan", () => expect(csvFileName("2026-11-17")).toBe("team-performance-calls-2026-11-17.csv"));
+  it("names one day", () => expect(csvFileName([sent])).toBe("team-performance-calls-2026-11-17.csv"));
+  it("names a date range and the filter", () => {
+    const earlier = { ...sent, at: "2026-11-16T09:00:00-05:00" };
+    expect(csvFileName([sent, earlier], "skipped_short")).toBe(
+      "team-performance-calls-2026-11-16-to-2026-11-17-skipped-short.csv",
+    );
+  });
+  it("still names an empty list", () => expect(csvFileName([])).toBe("team-performance-calls.csv"));
+});
+
+describe("formula safety", () => {
+  it.each(["=SUM(A1)", "+1", "-1", "@cmd"])("prefixes a name starting with %s", (name) => {
+    const csv = callsToCsv([sent], [{ ...ana, name }]);
+    expect(csv).toContain(`,'${name},`);
+  });
+  it("leaves numbers and normal names alone", () => {
+    expect(callsToCsv([{ ...sent, durationSec: -5 }], [{ ...ana, name: "Ana" }])).toContain(",Ana,CRM-1,");
+  });
 });

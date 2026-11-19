@@ -57,7 +57,7 @@ export function Overview() {
           <div className="k">Screened out</div>
           <div className="v">{o.screened}</div>
           <div className="n">
-            {c.skipped_short} under 2 min · {c.skipped_daily_cap} asked today · {c.no_match} no match
+            {c.skipped_short} under 2 min · {c.skipped_daily_cap} asked in 24 h · {c.no_match} no match
           </div>
         </div>
         <div className="fig flag">

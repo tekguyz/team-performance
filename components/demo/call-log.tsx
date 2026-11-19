@@ -19,7 +19,7 @@ const FILTERS: { key: Outcome | "all"; label: string }[] = [
   { key: "all", label: "All" },
   { key: "sent", label: "Sent" },
   { key: "skipped_short", label: "Under 2 minutes" },
-  { key: "skipped_daily_cap", label: "Already asked today" },
+  { key: "skipped_daily_cap", label: "Asked in the last 24 hours" },
   { key: "no_match", label: "No match" },
 ];
 const RULES = [
@@ -73,10 +73,10 @@ export function CallLog() {
         <button
           type="button"
           className="btn"
-          onClick={() => download(csvFileName(SAMPLE_DATE), callsToCsv(list, state.people))}
+          onClick={() => download(csvFileName(list, filter), callsToCsv(list, state.people))}
         >
           <DownloadIcon />
-          Export CSV
+          Export {list.length} {list.length === 1 ? "call" : "calls"}
         </button>
         <BatchButton onRun={run} />
       </div>

@@ -33,7 +33,7 @@ This repo is a landing page plus a one-click, browser-only demo for the made-up 
 
 ## Brand Commitments
 
-No measured claims (time saved, response rate). Never reads as employee surveillance: the focus rating is credit and proof for the team. Words: "Review", "Cleared by {name}", "Skipped: under 2 minutes", "Skipped: already asked today", "No match: extension not mapped".
+No measured claims (time saved, response rate). Never reads as employee surveillance: the focus rating is credit and proof for the team. Words: "Review", "Cleared by {name}", "Skipped: under 2 minutes", "Skipped: asked in the last 24 hours", "No match: extension not mapped".
 
 ## Evidence on Hand
 
