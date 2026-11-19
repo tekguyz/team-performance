@@ -44,6 +44,11 @@ export function dispatch(action: DemoAction): void {
   listeners.forEach((l) => l());
 }
 
+/** The current state, read outside React (the module store itself; tests use it). */
+export function getDemoState(): DemoState {
+  return getSnapshot();
+}
+
 export function useDemo(): { state: DemoState; dispatch: (a: DemoAction) => void } {
   const state = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   return { state, dispatch };

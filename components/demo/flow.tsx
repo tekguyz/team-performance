@@ -15,7 +15,7 @@ export function Flow({
   c: ReturnType<typeof outcomeCounts>;
 }) {
   const w = (n: number) => (processed === 0 ? 3 : Math.max(3, (26 * n) / processed));
-  const summary = `${processed} calls came in. ${c.no_match} had no mapped extension, ${c.skipped_short} were under 2 minutes, ${c.skipped_daily_cap} were already asked today. ${sent} texts were sent.`;
+  const summary = `${processed} calls came in. ${c.no_match} had no mapped extension, ${c.skipped_short} were under 2 minutes, ${c.skipped_daily_cap} were asked in the last 24 hours. ${sent} texts were sent.`;
   const exits = [
     { x: 200, n: c.no_match, label: "No match", from: w(processed) },
     { x: 380, n: c.skipped_short, label: "Under 2 minutes", from: w(mapped) },

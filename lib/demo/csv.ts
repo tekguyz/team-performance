@@ -1,11 +1,14 @@
 import { formatDateTime, maskCustomer } from "@/lib/demo/format";
 import { OUTCOME_LABEL } from "@/lib/demo/rules";
+import { dateKey } from "@/lib/demo/time";
 import type { LoggedCall, Person } from "@/lib/demo/types";
 
 const HEADER = ["Time", "Extension", "Person", "CRM user", "Customer", "Duration (s)", "Outcome"];
 
+/** A text field starting with = + - or @ opens as a formula in Excel, so it gets a leading '. */
 function field(value: string | number): string {
-  const s = String(value);
+  let s = String(value);
+  if (typeof value === "string" && /^[=+\-@]/.test(s)) s = `'${s}`;
   return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
 
@@ -27,6 +30,9 @@ export function callsToCsv(calls: LoggedCall[], people: Person[]): string {
   return "﻿" + [HEADER, ...rows].map((r) => r.map(field).join(",")).join("\r\n") + "\r\n";
 }
 
-export function csvFileName(date: string): string {
-  return `team-performance-calls-${date}.csv`;
+/** "team-performance-calls-2026-11-17.csv", or "...-2026-11-16-to-2026-11-17-skipped-short.csv" for a range and a filter. */
+export function csvFileName(calls: Pick<LoggedCall, "at">[], filter: string = "all"): string {
+  const days = calls.map((c) => dateKey(c.at)).sort();
+  const range = days.length === 0 ? "" : days[0] === days[days.length - 1] ? days[0] : `${days[0]}-to-${days[days.length - 1]}`;
+  return ["team-performance-calls", range, filter === "all" ? "" : filter.replace(/_/g, "-")].filter(Boolean).join("-") + ".csv";
 }

@@ -7,7 +7,7 @@ export const DAILY_CAP_MS = 86_400_000;
 export const OUTCOME_LABEL: Record<Outcome, string> = {
   sent: "Sent",
   skipped_short: "Skipped: under 2 minutes",
-  skipped_daily_cap: "Skipped: already asked today",
+  skipped_daily_cap: "Skipped: asked in the last 24 hours",
   no_match: "No match: extension not mapped",
 };
 
